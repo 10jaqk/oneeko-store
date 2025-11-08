@@ -1,0 +1,33 @@
+# Node modules
+node_modules/
+npm-debug.log*
+
+# Environment variables
+.env
+.env.local
+
+# Shopify CLI
+.shopify/
+
+# Build outputs
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+
+# Database
+*.db
+*.sqlite
+prisma/dev.db
+
+# Temp files
+*.tmp
+.cache/
