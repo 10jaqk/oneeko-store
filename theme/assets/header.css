@@ -306,6 +306,89 @@
 }
 
 /* ============================================
+   SEARCH MODAL
+   ============================================ */
+
+.search-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  padding-top: 100px;
+}
+
+.search-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+.search-modal__container {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  background-color: var(--color-bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  z-index: 1;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-modal__close {
+  position: absolute;
+  top: var(--spacing-4);
+  right: var(--spacing-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: color var(--transition-base);
+  z-index: 2;
+}
+
+.search-modal__close:hover {
+  color: var(--color-text-primary);
+}
+
+.search-modal__close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.search-modal__content {
+  padding: var(--spacing-8) var(--spacing-6);
+}
+
+/* ============================================
    DESKTOP ADJUSTMENTS
    ============================================ */
 

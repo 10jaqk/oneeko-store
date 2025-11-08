@@ -45,15 +45,16 @@
     <!-- Header Actions -->
     <div class="header__actions">
       <!-- Search -->
-      <a
-        href="{{ routes.search_url }}"
+      <button
+        type="button"
         class="header__action"
+        data-search-toggle
         aria-label="{{ 'general.accessibility.search' | t }}"
       >
         <span class="icon icon--search">
           {%- render 'icon-search' -%}
         </span>
-      </a>
+      </button>
 
       <!-- Account -->
       <a
@@ -112,6 +113,24 @@
         {%- endfor -%}
       </ul>
     </nav>
+  </div>
+</div>
+
+<!-- Search Modal -->
+<div class="search-modal" data-search-modal>
+  <div class="search-modal__overlay" data-search-close></div>
+  <div class="search-modal__container">
+    <button
+      type="button"
+      class="search-modal__close"
+      data-search-close
+      aria-label="Close search"
+    >
+      {%- render 'icon-close' -%}
+    </button>
+    <div class="search-modal__content">
+      {%- render 'header-search' -%}
+    </div>
   </div>
 </div>
 

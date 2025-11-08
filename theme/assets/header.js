@@ -42,9 +42,63 @@ class HeaderScroll {
   }
 }
 
+/**
+ * Search Modal Toggle
+ */
+class SearchModal {
+  constructor() {
+    this.modal = document.querySelector('[data-search-modal]');
+    this.toggleButtons = document.querySelectorAll('[data-search-toggle]');
+    this.closeButtons = document.querySelectorAll('[data-search-close]');
+
+    if (!this.modal) return;
+
+    this.bindEvents();
+  }
+
+  bindEvents() {
+    // Open modal
+    this.toggleButtons.forEach(btn => {
+      btn.addEventListener('click', () => this.open());
+    });
+
+    // Close modal
+    this.closeButtons.forEach(btn => {
+      btn.addEventListener('click', () => this.close());
+    });
+
+    // Close on escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.modal.classList.contains('active')) {
+        this.close();
+      }
+    });
+  }
+
+  open() {
+    this.modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Focus search input
+    setTimeout(() => {
+      const input = this.modal.querySelector('[data-search-input]');
+      if (input) input.focus();
+    }, 100);
+  }
+
+  close() {
+    this.modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
 // Initialize on DOM ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => new HeaderScroll());
+  document.addEventListener('DOMContentLoaded', () => {
+    new HeaderScroll();
+    new SearchModal();
+  });
 } else {
   new HeaderScroll();
+  new SearchModal();
 }

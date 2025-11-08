@@ -1,0 +1,254 @@
+<div class="product-accordions">
+  <!-- Overview Accordion -->
+  <details class="accordion" open>
+    <summary class="accordion__summary">
+      <span class="accordion__title">Overview</span>
+      <span class="accordion__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </span>
+    </summary>
+    <div class="accordion__content">
+      {%- if product.description != blank -%}
+        {{ product.description }}
+      {%- else -%}
+        <p>Product description will appear here.</p>
+      {%- endif -%}
+    </div>
+  </details>
+
+  <!-- Specifications Accordion -->
+  {%- if product.metafields.specifications.details != blank or section.settings.show_specs -%}
+    <details class="accordion">
+      <summary class="accordion__summary">
+        <span class="accordion__title">Specifications</span>
+        <span class="accordion__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </span>
+      </summary>
+      <div class="accordion__content">
+        {%- if product.metafields.specifications.details != blank -%}
+          {{ product.metafields.specifications.details }}
+        {%- else -%}
+          <ul class="specs-list">
+            {%- if product.variants.first.weight -%}
+              <li><strong>Weight:</strong> {{ product.variants.first.weight | weight_with_unit }}</li>
+            {%- endif -%}
+            {%- if product.variants.first.sku -%}
+              <li><strong>SKU:</strong> {{ product.variants.first.sku }}</li>
+            {%- endif -%}
+            {%- if product.vendor -%}
+              <li><strong>Brand:</strong> {{ product.vendor }}</li>
+            {%- endif -%}
+            <li><strong>Availability:</strong> {% if product.available %}In Stock{% else %}Out of Stock{% endif %}</li>
+          </ul>
+        {%- endif -%}
+      </div>
+    </details>
+  {%- endif -%}
+
+  <!-- Shipping & Returns Accordion -->
+  <details class="accordion">
+    <summary class="accordion__summary">
+      <span class="accordion__title">Shipping & Returns</span>
+      <span class="accordion__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </span>
+    </summary>
+    <div class="accordion__content">
+      <div class="shipping-info">
+        <div class="shipping-info__item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+          </svg>
+          <div>
+            <strong>Free Shipping</strong>
+            <p>On all orders over $50. Standard delivery in 3-5 business days.</p>
+          </div>
+        </div>
+        <div class="shipping-info__item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <div>
+            <strong>30-Day Returns</strong>
+            <p>Not satisfied? Return within 30 days for a full refund. No questions asked.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- FAQ Accordion -->
+  <details class="accordion">
+    <summary class="accordion__summary">
+      <span class="accordion__title">FAQ</span>
+      <span class="accordion__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </span>
+    </summary>
+    <div class="accordion__content">
+      <div class="faq-list">
+        <div class="faq-item">
+          <strong>How long does shipping take?</strong>
+          <p>Standard shipping takes 3-5 business days. Express shipping (1-2 days) is available at checkout.</p>
+        </div>
+        <div class="faq-item">
+          <strong>What's your warranty policy?</strong>
+          <p>All products come with a 1-year manufacturer warranty covering defects in materials and workmanship.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Do you ship internationally?</strong>
+          <p>Yes! We ship worldwide. International shipping times vary by location (7-14 business days).</p>
+        </div>
+        <div class="faq-item">
+          <strong>How do I track my order?</strong>
+          <p>You'll receive a tracking number via email once your order ships. Use it to track your package in real-time.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+</div>
+
+<style>
+  .product-accordions {
+    margin-top: var(--spacing-8);
+  }
+
+  .accordion {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .accordion:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .accordion__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-4) 0;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    transition: color var(--transition-base);
+  }
+
+  .accordion__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .accordion__summary:hover {
+    color: var(--color-brand-primary);
+  }
+
+  .accordion__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-heading);
+  }
+
+  .accordion__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    transition: transform var(--transition-base);
+  }
+
+  .accordion[open] .accordion__icon {
+    transform: rotate(180deg);
+  }
+
+  .accordion__content {
+    padding: 0 0 var(--spacing-6) 0;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .accordion__content ul {
+    padding-left: var(--spacing-5);
+  }
+
+  .accordion__content li {
+    margin-bottom: var(--spacing-2);
+  }
+
+  /* Specs List */
+  .specs-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .specs-list li {
+    display: flex;
+    padding: var(--spacing-3) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .specs-list li:last-child {
+    border-bottom: none;
+  }
+
+  .specs-list strong {
+    min-width: 120px;
+    color: var(--color-text-primary);
+  }
+
+  /* Shipping Info */
+  .shipping-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+  }
+
+  .shipping-info__item {
+    display: flex;
+    gap: var(--spacing-4);
+  }
+
+  .shipping-info__item svg {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    color: var(--color-brand-primary);
+  }
+
+  .shipping-info__item strong {
+    display: block;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-2);
+    font-size: var(--font-size-base);
+  }
+
+  .shipping-info__item p {
+    margin: 0;
+    font-size: var(--font-size-sm);
+  }
+
+  /* FAQ List */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+  }
+
+  .faq-item strong {
+    display: block;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-2);
+    font-size: var(--font-size-base);
+  }
+
+  .faq-item p {
+    margin: 0;
+    font-size: var(--font-size-sm);
+  }
+</style>

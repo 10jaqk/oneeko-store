@@ -1,0 +1,407 @@
+<div class="header-search" data-header-search>
+  <form action="/search" method="get" class="header-search__form" role="search">
+    <input
+      type="search"
+      name="q"
+      class="header-search__input"
+      placeholder="{{ 'general.search.placeholder' | t }}"
+      aria-label="{{ 'general.accessibility.search' | t }}"
+      autocomplete="off"
+      data-search-input
+    >
+    <button type="submit" class="header-search__submit" aria-label="Submit search">
+      {%- render 'icon-search' -%}
+    </button>
+  </form>
+
+  <!-- Predictive Search Results -->
+  <div class="predictive-search" data-predictive-search hidden>
+    <div class="predictive-search__loading" data-search-loading hidden>
+      <div class="spinner"></div>
+      <span>Searching...</span>
+    </div>
+
+    <div class="predictive-search__results" data-search-results></div>
+
+    <div class="predictive-search__footer" data-search-footer hidden>
+      <a href="/search" class="predictive-search__view-all" data-search-view-all>
+        View all results
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .header-search {
+    position: relative;
+  }
+
+  .header-search__form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+  }
+
+  .header-search__input {
+    flex: 1;
+    min-width: 0;
+    padding: var(--spacing-2) var(--spacing-10) var(--spacing-2) var(--spacing-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: 14px;
+    transition: border-color var(--transition-base);
+  }
+
+  .header-search__input:focus {
+    outline: none;
+    border-color: var(--color-brand-primary);
+  }
+
+  .header-search__submit {
+    position: absolute;
+    right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: color var(--transition-base);
+  }
+
+  .header-search__submit:hover {
+    color: var(--color-brand-primary);
+  }
+
+  .header-search__submit svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Predictive Search Results */
+  .predictive-search {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    min-width: 320px;
+    max-width: 600px;
+    max-height: 80vh;
+    background-color: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    overflow-y: auto;
+    z-index: 1000;
+  }
+
+  .predictive-search[hidden] {
+    display: none;
+  }
+
+  .predictive-search__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-8);
+    color: var(--color-text-secondary);
+  }
+
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-brand-primary);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .predictive-search__results {
+    padding: var(--spacing-2);
+  }
+
+  .predictive-search__group {
+    margin-bottom: var(--spacing-4);
+  }
+
+  .predictive-search__group-title {
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .predictive-search__item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--color-text-primary);
+    transition: background-color var(--transition-base);
+  }
+
+  .predictive-search__item:hover {
+    background-color: var(--color-bg-secondary);
+  }
+
+  .predictive-search__item-image {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .predictive-search__item-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .predictive-search__item-title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .predictive-search__item-price {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-brand-primary);
+  }
+
+  .predictive-search__item-price--compare {
+    margin-left: var(--spacing-2);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+  }
+
+  .predictive-search__footer {
+    padding: var(--spacing-4);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+  }
+
+  .predictive-search__view-all {
+    display: inline-block;
+    padding: var(--spacing-2) var(--spacing-6);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: background-color var(--transition-base);
+  }
+
+  .predictive-search__view-all:hover {
+    background-color: var(--color-bg-tertiary);
+  }
+
+  .predictive-search__empty {
+    padding: var(--spacing-8);
+    text-align: center;
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 767px) {
+    .header-search__form {
+      max-width: none;
+    }
+
+    .predictive-search {
+      left: -20px;
+      right: -20px;
+      max-width: none;
+    }
+  }
+</style>
+
+<script>
+  // Predictive Search
+  class PredictiveSearch {
+    constructor() {
+      this.searchContainer = document.querySelector('[data-header-search]');
+      if (!this.searchContainer) return;
+
+      this.input = this.searchContainer.querySelector('[data-search-input]');
+      this.resultsPanel = this.searchContainer.querySelector('[data-predictive-search]');
+      this.resultsContainer = this.searchContainer.querySelector('[data-search-results]');
+      this.loadingIndicator = this.searchContainer.querySelector('[data-search-loading]');
+      this.footer = this.searchContainer.querySelector('[data-search-footer]');
+      this.viewAllLink = this.searchContainer.querySelector('[data-search-view-all]');
+
+      this.debounceTimer = null;
+      this.currentRequest = null;
+
+      this.bindEvents();
+    }
+
+    bindEvents() {
+      // Input events
+      this.input.addEventListener('input', (e) => {
+        this.handleInput(e.target.value);
+      });
+
+      this.input.addEventListener('focus', () => {
+        if (this.input.value.trim().length >= 2) {
+          this.showResults();
+        }
+      });
+
+      // Close on click outside
+      document.addEventListener('click', (e) => {
+        if (!this.searchContainer.contains(e.target)) {
+          this.hideResults();
+        }
+      });
+
+      // Close on escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          this.hideResults();
+        }
+      });
+    }
+
+    handleInput(query) {
+      clearTimeout(this.debounceTimer);
+
+      if (query.trim().length < 2) {
+        this.hideResults();
+        return;
+      }
+
+      // Debounce 200ms
+      this.debounceTimer = setTimeout(() => {
+        this.fetchResults(query);
+      }, 200);
+    }
+
+    async fetchResults(query) {
+      // Cancel previous request
+      if (this.currentRequest) {
+        this.currentRequest.abort();
+      }
+
+      this.showLoading();
+
+      const controller = new AbortController();
+      this.currentRequest = controller;
+
+      try {
+        const response = await fetch(
+          `/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=6`,
+          { signal: controller.signal }
+        );
+
+        const data = await response.json();
+        this.renderResults(data, query);
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          console.error('Search error:', error);
+          this.hideLoading();
+        }
+      }
+    }
+
+    renderResults(data, query) {
+      this.hideLoading();
+
+      const products = data.resources.results.products || [];
+
+      if (products.length === 0) {
+        this.resultsContainer.innerHTML = `
+          <div class="predictive-search__empty">
+            <p>No results found for "${query}"</p>
+            <p style="font-size: var(--font-size-sm); margin-top: var(--spacing-2);">
+              Try a different search term
+            </p>
+          </div>
+        `;
+        this.showResults();
+        this.footer.hidden = true;
+        return;
+      }
+
+      const html = `
+        <div class="predictive-search__group">
+          <div class="predictive-search__group-title">Products</div>
+          ${products.map(product => this.renderProduct(product)).join('')}
+        </div>
+      `;
+
+      this.resultsContainer.innerHTML = html;
+      this.viewAllLink.href = `/search?q=${encodeURIComponent(query)}`;
+      this.footer.hidden = false;
+      this.showResults();
+    }
+
+    renderProduct(product) {
+      const price = product.price ? (product.price / 100).toFixed(2) : null;
+      const comparePrice = product.compare_at_price ? (product.compare_at_price / 100).toFixed(2) : null;
+
+      return `
+        <a href="${product.url}" class="predictive-search__item">
+          ${product.image ?
+            `<img src="${product.image}" alt="${product.title}" class="predictive-search__item-image" loading="lazy">` :
+            `<div class="predictive-search__item-image"></div>`
+          }
+          <div class="predictive-search__item-content">
+            <div class="predictive-search__item-title">${product.title}</div>
+            ${price ? `
+              <div class="predictive-search__item-price">
+                $${price}
+                ${comparePrice ? `<span class="predictive-search__item-price--compare">$${comparePrice}</span>` : ''}
+              </div>
+            ` : ''}
+          </div>
+        </a>
+      `;
+    }
+
+    showLoading() {
+      this.loadingIndicator.hidden = false;
+      this.resultsContainer.innerHTML = '';
+      this.footer.hidden = true;
+      this.showResults();
+    }
+
+    hideLoading() {
+      this.loadingIndicator.hidden = true;
+    }
+
+    showResults() {
+      this.resultsPanel.hidden = false;
+    }
+
+    hideResults() {
+      this.resultsPanel.hidden = true;
+    }
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new PredictiveSearch());
+  } else {
+    new PredictiveSearch();
+  }
+</script>

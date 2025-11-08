@@ -100,13 +100,8 @@
           </div>
         {% endform %}
 
-        <!-- Product Description -->
-        {%- if product.description != blank -%}
-          <div class="product-page__description">
-            <h3>Description</h3>
-            {{ product.description }}
-          </div>
-        {%- endif -%}
+        <!-- Product Accordions -->
+        {%- render 'product-accordions', product: product, section: section -%}
       </div>
     </div>
   </div>
