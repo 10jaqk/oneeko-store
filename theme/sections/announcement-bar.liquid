@@ -1,0 +1,143 @@
+{%- if section.settings.enabled -%}
+  <div
+    class="announcement-bar"
+    data-announcement-bar
+    style="
+      background-color: {{ section.settings.background_color }};
+      color: {{ section.settings.text_color }};
+    "
+  >
+    <div class="announcement-bar__inner container">
+      <div class="announcement-bar__content">
+        {%- if section.settings.link != blank -%}
+          <a href="{{ section.settings.link }}" class="announcement-bar__link">
+            {{ section.settings.message }}
+          </a>
+        {%- else -%}
+          <p class="announcement-bar__text">{{ section.settings.message }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.dismissible -%}
+        <button
+          type="button"
+          class="announcement-bar__close"
+          data-announcement-dismiss
+          aria-label="{{ 'sections.announcement_bar.close' | t }}"
+        >
+          <span class="icon icon--close">
+            {%- render 'icon-close' -%}
+          </span>
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <style>
+    .announcement-bar {
+      position: relative;
+      z-index: 100;
+      padding: var(--spacing-3) 0;
+    }
+
+    .announcement-bar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-4);
+      position: relative;
+    }
+
+    .announcement-bar__content {
+      flex: 1;
+      text-align: center;
+    }
+
+    .announcement-bar__text,
+    .announcement-bar__link {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      margin: 0;
+      color: inherit;
+    }
+
+    .announcement-bar__link {
+      text-decoration: none;
+      transition: opacity var(--transition-base);
+    }
+
+    .announcement-bar__link:hover {
+      opacity: 0.8;
+      color: inherit;
+    }
+
+    .announcement-bar__close {
+      position: absolute;
+      right: var(--spacing-4);
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      padding: var(--spacing-2);
+      cursor: pointer;
+      color: inherit;
+      opacity: 0.7;
+      transition: opacity var(--transition-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .announcement-bar__close:hover {
+      opacity: 1;
+    }
+
+    .announcement-bar__close .icon {
+      width: 16px;
+      height: 16px;
+    }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Message",
+      "default": "Free shipping on orders over $50!"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link (Optional)"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#2563EB"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "checkbox",
+      "id": "dismissible",
+      "label": "Allow Users to Dismiss",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

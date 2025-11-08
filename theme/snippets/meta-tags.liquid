@@ -1,0 +1,23 @@
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ page_title }}">
+<meta property="og:description" content="{{ page_description | default: shop.description | escape }}">
+{%- if page_image -%}
+  <meta property="og:image" content="https:{{ page_image | img_url: 'large' }}">
+{%- endif -%}
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="{{ canonical_url }}">
+<meta property="twitter:title" content="{{ page_title }}">
+<meta property="twitter:description" content="{{ page_description | default: shop.description | escape }}">
+{%- if page_image -%}
+  <meta property="twitter:image" content="https:{{ page_image | img_url: 'large' }}">
+{%- endif -%}
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ canonical_url }}">
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="{{ 'favicon.ico' | asset_url }}">

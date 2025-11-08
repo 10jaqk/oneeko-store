@@ -1,0 +1,143 @@
+<section class="value-props py-12" style="background-color: var(--color-bg-secondary);">
+  <div class="container">
+    <div class="value-props__grid grid grid-cols-1 md:grid-cols-3">
+      {%- for block in section.blocks -%}
+        <div class="value-prop" {{ block.shopify_attributes }}>
+          <div class="value-prop__icon">
+            {%- case block.settings.icon -%}
+              {%- when 'truck' -%}
+                {%- render 'icon-truck' -%}
+              {%- when 'shield' -%}
+                {%- render 'icon-shield' -%}
+              {%- when 'return' -%}
+                {%- render 'icon-return' -%}
+            {%- endcase -%}
+          </div>
+
+          <h3 class="value-prop__title">{{ block.settings.title }}</h3>
+          <p class="value-prop__text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .value-props__grid {
+    gap: var(--spacing-8);
+  }
+
+  .value-prop {
+    text-align: center;
+    padding: var(--spacing-6);
+  }
+
+  .value-prop__icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto var(--spacing-4);
+    color: var(--color-brand-primary);
+  }
+
+  .value-prop__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-3);
+  }
+
+  .value-prop__text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+    .value-props__grid {
+      gap: var(--spacing-6);
+    }
+
+    .value-prop {
+      padding: var(--spacing-4);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Value Props",
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "value_prop",
+      "name": "Value Proposition",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "truck",
+              "label": "Truck (Free Shipping)"
+            },
+            {
+              "value": "shield",
+              "label": "Shield (Secure)"
+            },
+            {
+              "value": "return",
+              "label": "Return (Easy Returns)"
+            }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Free shipping on all orders over $50"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Value Props",
+      "blocks": [
+        {
+          "type": "value_prop",
+          "settings": {
+            "icon": "truck",
+            "title": "Free Shipping",
+            "text": "Free shipping on all orders over $50"
+          }
+        },
+        {
+          "type": "value_prop",
+          "settings": {
+            "icon": "shield",
+            "title": "Secure Checkout",
+            "text": "100% secure payment with SSL encryption"
+          }
+        },
+        {
+          "type": "value_prop",
+          "settings": {
+            "icon": "return",
+            "title": "30-Day Returns",
+            "text": "Easy returns and exchanges within 30 days"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

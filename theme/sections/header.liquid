@@ -1,0 +1,145 @@
+<header class="header" data-header>
+  <div class="header__inner container">
+    <!-- Mobile Menu Toggle -->
+    <button
+      type="button"
+      class="header__menu-toggle mobile-only"
+      data-mobile-menu-toggle
+      aria-label="{{ 'general.accessibility.menu' | t }}"
+    >
+      <span class="icon icon--menu">
+        {%- render 'icon-menu' -%}
+      </span>
+    </button>
+
+    <!-- Logo -->
+    <div class="header__logo">
+      <a href="{{ routes.root_url }}" class="header__logo-link">
+        {%- if section.settings.logo != blank -%}
+          <img
+            src="{{ section.settings.logo | img_url: 'master' }}"
+            alt="{{ shop.name }}"
+            width="{{ section.settings.logo_width }}"
+            height="auto"
+            loading="lazy"
+          >
+        {%- else -%}
+          <span class="header__logo-text">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="header__nav desktop-only" role="navigation">
+      <ul class="header__nav-list">
+        {%- for link in section.settings.menu.links -%}
+          <li class="header__nav-item">
+            <a href="{{ link.url }}" class="header__nav-link">
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="header__actions">
+      <!-- Search -->
+      <a
+        href="{{ routes.search_url }}"
+        class="header__action"
+        aria-label="{{ 'general.accessibility.search' | t }}"
+      >
+        <span class="icon icon--search">
+          {%- render 'icon-search' -%}
+        </span>
+      </a>
+
+      <!-- Account -->
+      <a
+        href="{{ routes.account_url }}"
+        class="header__action"
+        aria-label="{{ 'general.accessibility.account' | t }}"
+      >
+        <span class="icon icon--account">
+          {%- render 'icon-account' -%}
+        </span>
+      </a>
+
+      <!-- Cart -->
+      <a
+        href="{{ routes.cart_url }}"
+        class="header__action header__cart"
+        data-cart-toggle
+        aria-label="{{ 'general.accessibility.cart' | t }}"
+      >
+        <span class="icon icon--cart">
+          {%- render 'icon-cart' -%}
+        </span>
+        <span class="header__cart-count" data-cart-count>
+          {{ cart.item_count }}
+        </span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu" data-mobile-menu>
+  <div class="mobile-menu__panel">
+    <div class="mobile-menu__header">
+      <span class="mobile-menu__title">{{ 'sections.header.menu' | t }}</span>
+      <button
+        type="button"
+        class="mobile-menu__close"
+        data-mobile-menu-close
+        aria-label="{{ 'general.accessibility.close' | t }}"
+      >
+        <span class="icon icon--close">
+          {%- render 'icon-close' -%}
+        </span>
+      </button>
+    </div>
+
+    <nav class="mobile-menu__nav" role="navigation">
+      <ul class="mobile-menu__list">
+        {%- for link in section.settings.menu.links -%}
+          <li class="mobile-menu__item">
+            <a href="{{ link.url }}" class="mobile-menu__link">
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Desktop Logo Width",
+      "default": 150
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

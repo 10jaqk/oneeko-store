@@ -1,0 +1,141 @@
+<section class="newsletter py-12" style="background-color: var(--color-brand-bg);">
+  <div class="container">
+    <div class="newsletter__content">
+      {%- if section.settings.title != blank -%}
+        <h2 class="newsletter__title text-center">{{ section.settings.title }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.subtitle != blank -%}
+        <p class="newsletter__subtitle text-center">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+
+      {% form 'customer', class: 'newsletter__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+
+        <div class="newsletter__input-wrapper">
+          <input
+            type="email"
+            name="contact[email]"
+            class="newsletter__input"
+            placeholder="{{ 'general.newsletter.placeholder' | t }}"
+            aria-label="{{ 'general.newsletter.label' | t }}"
+            required
+          >
+          <button type="submit" class="newsletter__button btn btn-primary">
+            {{ 'general.newsletter.button_label' | t }}
+          </button>
+        </div>
+
+        {%- if form.posted_successfully? -%}
+          <p class="newsletter__success">{{ 'general.newsletter.success' | t }}</p>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <p class="newsletter__error">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+      {% endform %}
+
+      <p class="newsletter__privacy text-center">{{ 'sections.footer.privacy_notice' | t }}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .newsletter__content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .newsletter__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .newsletter__subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-8);
+  }
+
+  .newsletter__form {
+    margin-bottom: var(--spacing-4);
+  }
+
+  .newsletter__input-wrapper {
+    display: flex;
+    gap: var(--spacing-3);
+  }
+
+  .newsletter__input {
+    flex: 1;
+  }
+
+  .newsletter__button {
+    flex-shrink: 0;
+  }
+
+  .newsletter__success {
+    color: var(--color-success);
+    text-align: center;
+    font-weight: var(--font-weight-medium);
+    margin-top: var(--spacing-4);
+  }
+
+  .newsletter__error {
+    color: var(--color-error);
+    text-align: center;
+    font-weight: var(--font-weight-medium);
+    margin-top: var(--spacing-4);
+  }
+
+  .newsletter__privacy {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+    .newsletter__title {
+      font-size: var(--font-size-2xl);
+    }
+
+    .newsletter__subtitle {
+      font-size: var(--font-size-base);
+    }
+
+    .newsletter__input-wrapper {
+      flex-direction: column;
+    }
+
+    .newsletter__button {
+      width: 100%;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Join Our Community"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Get exclusive offers and product updates"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

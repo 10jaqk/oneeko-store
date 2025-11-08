@@ -1,0 +1,240 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Oneeko Store",
+    "theme_version": "1.0.0",
+    "theme_author": "Oneeko",
+    "theme_documentation_url": "https://oneeko.com",
+    "theme_support_url": "https://oneeko.com/support"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_brand_primary",
+        "label": "Primary Brand Color",
+        "default": "#2563EB"
+      },
+      {
+        "type": "color",
+        "id": "color_cta_green",
+        "label": "Primary CTA Color (Green)",
+        "default": "#10B981"
+      },
+      {
+        "type": "color",
+        "id": "color_cta_orange",
+        "label": "Accent CTA Color (Orange)",
+        "default": "#F97316"
+      },
+      {
+        "type": "header",
+        "content": "Background Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_primary",
+        "label": "Primary Background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_secondary",
+        "label": "Secondary Background",
+        "default": "#F8F9FA"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Font Settings"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "montserrat_n7"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "roboto_n4"
+      }
+    ]
+  },
+  {
+    "name": "Logo & Branding",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo Image"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 50,
+        "max": 300,
+        "step": 10,
+        "unit": "px",
+        "label": "Logo Width",
+        "default": 150
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Announcement Bar",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "announcement_bar_enabled",
+        "label": "Enable Announcement Bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement Text",
+        "default": "Free shipping on orders over $50!"
+      },
+      {
+        "type": "url",
+        "id": "announcement_link",
+        "label": "Announcement Link (Optional)"
+      },
+      {
+        "type": "color",
+        "id": "announcement_bg_color",
+        "label": "Background Color",
+        "default": "#2563EB"
+      },
+      {
+        "type": "color",
+        "id": "announcement_text_color",
+        "label": "Text Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "checkbox",
+        "id": "announcement_dismissible",
+        "label": "Allow Dismissal",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Free Shipping",
+    "settings": [
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free Shipping Threshold (in dollars)",
+        "default": 50
+      },
+      {
+        "type": "text",
+        "id": "currency_symbol",
+        "label": "Currency Symbol",
+        "default": "$"
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social Media Links"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "url",
+        "id": "social_twitter",
+        "label": "Twitter URL"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest",
+        "label": "Pinterest URL"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      }
+    ]
+  },
+  {
+    "name": "Product Settings",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "product_show_vendor",
+        "label": "Show Product Vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "product_show_sku",
+        "label": "Show Product SKU",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_product_reviews",
+        "label": "Enable Product Reviews",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Cart Settings",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart Type",
+        "options": [
+          {
+            "value": "drawer",
+            "label": "Drawer (Slide-out)"
+          },
+          {
+            "value": "page",
+            "label": "Full Page"
+          }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_notes_enable",
+        "label": "Enable Cart Notes",
+        "default": true
+      }
+    ]
+  }
+]

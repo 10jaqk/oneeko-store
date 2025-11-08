@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {%- render 'meta-tags' -%}
+
+  <title>
+    {{ page_title }}
+    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Load Roboto and Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- CSS Assets -->
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ 'header.css' | asset_url | stylesheet_tag }}
+
+  <!-- JavaScript Assets -->
+  <script src="{{ 'global.js' | asset_url }}" defer></script>
+
+  {{ content_for_header }}
+</head>
+
+<body class="template-{{ template.name }}">
+
+  <!-- Announcement Bar -->
+  {%- section 'announcement-bar' -%}
+
+  <!-- Header -->
+  {%- section 'header' -%}
+
+  <!-- Main Content -->
+  <main id="MainContent" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  <!-- Footer -->
+  {%- section 'footer' -%}
+
+  <!-- Cart Drawer (slide-out cart) -->
+  {%- render 'cart-drawer' -%}
+
+</body>
+</html>
