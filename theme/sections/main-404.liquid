@@ -1,0 +1,36 @@
+<section class="error-404 py-12">
+  <div class="container text-center">
+    <h1 class="error-404__title">{{ 'general.404.title' | t }}</h1>
+    <p class="error-404__text">{{ 'general.404.subtext' | t }}</p>
+    <a href="{{ routes.root_url }}" class="btn btn-primary">
+      {{ 'general.breadcrumbs.home' | t }}
+    </a>
+  </div>
+</section>
+
+<style>
+  .error-404 {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .error-404__title {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .error-404__text {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-8);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": []
+}
+{% endschema %}

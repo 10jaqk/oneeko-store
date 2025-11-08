@@ -1,0 +1,162 @@
+<div class="sticky-atc mobile-only" data-sticky-atc>
+  <div class="sticky-atc__content">
+    <div class="sticky-atc__product-info">
+      {%- if product.featured_image -%}
+        <img
+          src="{{ product.featured_image | img_url: '100x' }}"
+          alt="{{ product.title | escape }}"
+          class="sticky-atc__image"
+          loading="lazy"
+        >
+      {%- endif -%}
+      <div class="sticky-atc__details">
+        <p class="sticky-atc__title">{{ product.title | truncate: 30 }}</p>
+        <p class="sticky-atc__price">
+          {%- if product.compare_at_price > product.price -%}
+            <span class="sticky-atc__price-sale">{{ product.price | money }}</span>
+            <span class="sticky-atc__price-compare">{{ product.compare_at_price | money }}</span>
+          {%- else -%}
+            {{ product.price | money }}
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary sticky-atc__button"
+      data-sticky-atc-button
+      {% unless product.available %}disabled{% endunless %}
+    >
+      {%- if product.available -%}
+        {{ 'products.product.add_to_cart' | t }}
+      {%- else -%}
+        {{ 'products.product.sold_out' | t }}
+      {%- endif -%}
+    </button>
+  </div>
+</div>
+
+<style>
+  .sticky-atc {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 900;
+    background-color: var(--color-bg-primary);
+    border-top: 1px solid var(--color-border);
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+    transform: translateY(100%);
+    transition: transform var(--transition-base);
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+
+  .sticky-atc.active {
+    transform: translateY(0);
+  }
+
+  .sticky-atc__content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+  }
+
+  .sticky-atc__product-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sticky-atc__image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+  }
+
+  .sticky-atc__details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sticky-atc__title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    margin: 0 0 var(--spacing-1) 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sticky-atc__price {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+  }
+
+  .sticky-atc__price-sale {
+    color: var(--color-cta-red);
+    margin-right: var(--spacing-2);
+  }
+
+  .sticky-atc__price-compare {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+  }
+
+  .sticky-atc__button {
+    flex-shrink: 0;
+    padding: var(--spacing-3) var(--spacing-6);
+    min-height: 48px;
+  }
+
+  @media (min-width: 768px) {
+    .sticky-atc {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Sticky Add to Cart
+  (function() {
+    const stickyAtc = document.querySelector('[data-sticky-atc]');
+    const stickyButton = document.querySelector('[data-sticky-atc-button]');
+    const productForm = document.getElementById('product-form');
+
+    if (!stickyAtc || !productForm) return;
+
+    // Show/hide based on scroll position
+    let lastScroll = 0;
+    const scrollThreshold = 300;
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollTop > scrollThreshold) {
+        stickyAtc.classList.add('active');
+      } else {
+        stickyAtc.classList.remove('active');
+      }
+
+      lastScroll = scrollTop;
+    });
+
+    // Add to cart functionality
+    if (stickyButton) {
+      stickyButton.addEventListener('click', () => {
+        const submitButton = productForm.querySelector('[type="submit"]');
+        if (submitButton) {
+          submitButton.click();
+        }
+      });
+    }
+  })();
+</script>

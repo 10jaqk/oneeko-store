@@ -113,7 +113,7 @@
       <!-- Copyright & Legal -->
       <div class="footer__legal">
         <p class="footer__copyright">
-          &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'sections.footer.copyright' | t: year: 'now' | date: '%Y', shop_name: shop.name }}
+          &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
         </p>
         <div class="footer__legal-links">
           {%- for link in section.settings.legal_menu.links -%}
@@ -179,16 +179,17 @@
 
   .footer__newsletter-input-wrapper {
     display: flex;
+    flex-direction: column;
     gap: var(--spacing-2);
     margin-bottom: var(--spacing-3);
   }
 
   .footer__newsletter-input {
-    flex: 1;
+    width: 100%;
   }
 
   .footer__newsletter-button {
-    flex-shrink: 0;
+    width: 100%;
   }
 
   .footer__privacy-notice {

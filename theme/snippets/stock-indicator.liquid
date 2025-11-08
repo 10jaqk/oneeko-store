@@ -1,0 +1,81 @@
+{%- assign inventory = product.selected_or_first_available_variant.inventory_quantity -%}
+
+{%- if inventory > 0 and inventory <= 10 -%}
+  <div class="stock-indicator stock-indicator--low">
+    <div class="stock-indicator__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+    </div>
+    <span>
+      {%- if inventory == 1 -%}
+        {{ 'products.product.stock.only_one_left' | t }}
+      {%- else -%}
+        {{ 'products.product.stock.only_x_left' | t: count: inventory }}
+      {%- endif -%}
+    </span>
+  </div>
+{%- elsif inventory > 10 -%}
+  <div class="stock-indicator stock-indicator--in-stock">
+    <div class="stock-indicator__icon">
+      {%- render 'icon-check' -%}
+    </div>
+    <span>{{ 'products.product.stock.in_stock' | t }}</span>
+  </div>
+{%- else -%}
+  <div class="stock-indicator stock-indicator--out">
+    <div class="stock-indicator__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </div>
+    <span>{{ 'products.product.stock.out_of_stock' | t }}</span>
+  </div>
+{%- endif -%}
+
+<style>
+  .stock-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-4);
+    width: fit-content;
+  }
+
+  .stock-indicator__icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+  }
+
+  .stock-indicator--low {
+    background-color: #FEF3C7;
+    color: #92400E;
+  }
+
+  .stock-indicator--low .stock-indicator__icon {
+    color: #F59E0B;
+  }
+
+  .stock-indicator--in-stock {
+    background-color: #D1FAE5;
+    color: #065F46;
+  }
+
+  .stock-indicator--in-stock .stock-indicator__icon {
+    color: var(--color-cta-green);
+  }
+
+  .stock-indicator--out {
+    background-color: #FEE2E2;
+    color: #991B1B;
+  }
+
+  .stock-indicator--out .stock-indicator__icon {
+    color: #DC2626;
+  }
+</style>

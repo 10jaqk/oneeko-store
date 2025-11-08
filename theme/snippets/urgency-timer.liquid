@@ -1,0 +1,75 @@
+<div class="urgency-timer" data-urgency-timer>
+  <div class="urgency-timer__icon">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  </div>
+  <div class="urgency-timer__text">
+    <strong>{{ 'products.product.urgency.title' | t }}</strong>
+    <span data-timer-display>00:00:00</span>
+  </div>
+</div>
+
+<style>
+  .urgency-timer {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-4);
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    border-left: 4px solid var(--color-cta-orange);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .urgency-timer__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: var(--color-cta-orange);
+  }
+
+  .urgency-timer__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+    font-size: var(--font-size-sm);
+  }
+
+  .urgency-timer__text strong {
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .urgency-timer__text span {
+    color: var(--color-cta-orange);
+    font-weight: var(--font-weight-bold);
+    font-family: monospace;
+  }
+</style>
+
+<script>
+  // Urgency Timer - Resets daily at midnight
+  (function() {
+    const timerDisplay = document.querySelector('[data-timer-display]');
+    if (!timerDisplay) return;
+
+    function updateTimer() {
+      const now = new Date();
+      const midnight = new Date();
+      midnight.setHours(24, 0, 0, 0);
+
+      const diff = midnight - now;
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      timerDisplay.textContent =
+        `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  })();
+</script>

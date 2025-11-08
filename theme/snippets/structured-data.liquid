@@ -1,0 +1,72 @@
+{%- comment -%}
+  Schema.org structured data for better SEO
+{%- endcomment -%}
+
+{%- if template.name == 'product' -%}
+  {%- assign product_image = product.featured_image | img_url: '1024x1024' | prepend: 'https:' -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "image": {{ product_image | json }},
+    "description": {{ product.description | strip_html | truncate: 300 | json }},
+    {% if product.vendor != blank %}
+    "brand": {
+      "@type": "Brand",
+      "name": {{ product.vendor | json }}
+    },
+    {% endif %}
+    "sku": {{ product.selected_or_first_available_variant.sku | json }},
+    "offers": {
+      "@type": "Offer",
+      "url": {{ shop.url | append: product.url | json }},
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "price": {{ product.selected_or_first_available_variant.price | divided_by: 100.0 | json }},
+      "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+      "seller": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }}
+      }
+    }
+    {% if product.metafields.reviews.rating.value != blank %}
+    ,"aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": {{ product.metafields.reviews.rating.value }},
+      "reviewCount": {{ product.metafields.reviews.count.value }}
+    }
+    {% endif %}
+  }
+  </script>
+{%- elsif template.name == 'index' -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }},
+    "logo": {{ shop.brand.logo | img_url: '200x200' | prepend: 'https:' | json }},
+    "sameAs": [
+      {% if settings.social_facebook_link != blank %}{{ settings.social_facebook_link | json }},{% endif %}
+      {% if settings.social_instagram_link != blank %}{{ settings.social_instagram_link | json }},{% endif %}
+      {% if settings.social_twitter_link != blank %}{{ settings.social_twitter_link | json }}{% endif %}
+    ]
+  }
+  </script>
+{%- endif -%}
+
+{%- comment -%} Organization Schema {%- endcomment -%}
+{%- assign search_url = shop.url | append: '/search?q={search_term_string}' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {{ search_url | json }},
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>

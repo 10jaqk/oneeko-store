@@ -1,0 +1,42 @@
+<section class="product-recommendations py-12" style="background-color: var(--color-bg-secondary);">
+  <div class="container">
+    <h2 class="section-title text-center mb-4">{{ section.settings.heading }}</h2>
+
+    <div
+      class="product-recommendations__inner"
+      data-product-id="{{ product.id }}"
+      data-limit="{{ section.settings.products_to_show }}"
+    >
+      {%- if recommendations.performed and recommendations.products_count > 0 -%}
+        <div class="product-grid grid grid-cols-2 md:grid-cols-4">
+          {%- for product in recommendations.products limit: section.settings.products_to_show -%}
+            {%- render 'product-card', product: product -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Recommendations",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "You May Also Like"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Products to Show",
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

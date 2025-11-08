@@ -1,0 +1,293 @@
+<section class="product-page py-12">
+  <div class="container">
+    <div class="product-page__grid">
+      <!-- Product Images -->
+      <div class="product-page__gallery">
+        {%- render 'product-gallery', product: product -%}
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-page__info">
+        <h1 class="product-page__title">{{ product.title }}</h1>
+
+        {%- if product.vendor != blank and section.settings.show_vendor -%}
+          <p class="product-page__vendor">{{ product.vendor }}</p>
+        {%- endif -%}
+
+        <!-- Price -->
+        <div class="product-page__price-wrapper">
+          <div class="product-page__price">
+            {%- if product.compare_at_price > product.price -%}
+              <span class="product-page__price-sale">{{ product.price | money }}</span>
+              <span class="product-page__price-compare">{{ product.compare_at_price | money }}</span>
+              <span class="product-page__price-badge">
+                Save {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%
+              </span>
+            {%- else -%}
+              <span class="product-page__price-regular">{{ product.price | money }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <!-- Stock Indicator -->
+        {%- render 'stock-indicator', product: product -%}
+
+        <!-- Urgency Timer -->
+        {%- if section.settings.show_urgency -%}
+          {%- render 'urgency-timer' -%}
+        {%- endif -%}
+
+        <!-- Trust Badges -->
+        {%- render 'trust-badges' -%}
+
+        <!-- Product Form -->
+        {% form 'product', product, id: 'product-form', class: 'product-form' %}
+          {%- unless product.has_only_default_variant -%}
+            <div class="product-form__variants">
+              {%- for option in product.options_with_values -%}
+                <div class="product-form__option">
+                  <label for="Option-{{ forloop.index }}">{{ option.name }}</label>
+                  <select
+                    id="Option-{{ forloop.index }}"
+                    name="options[{{ option.name }}]"
+                    class="product-form__select"
+                  >
+                    {%- for value in option.values -%}
+                      <option value="{{ value }}">{{ value }}</option>
+                    {%- endfor -%}
+                  </select>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endunless -%}
+
+          <!-- Quantity -->
+          <div class="product-form__quantity">
+            <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
+            <div class="quantity-selector">
+              <button type="button" class="quantity-button quantity-minus" data-quantity-minus>
+                <span>−</span>
+              </button>
+              <input
+                type="number"
+                id="Quantity"
+                name="quantity"
+                value="1"
+                min="1"
+                class="quantity-input"
+                data-quantity-input
+              >
+              <button type="button" class="quantity-button quantity-plus" data-quantity-plus>
+                <span>+</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Add to Cart Button -->
+          <div class="product-form__buttons">
+            <button
+              type="submit"
+              name="add"
+              class="btn btn-primary btn-full product-form__add-to-cart"
+              {% unless product.available %}disabled{% endunless %}
+            >
+              {%- if product.available -%}
+                {{ 'products.product.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </button>
+          </div>
+        {% endform %}
+
+        <!-- Product Description -->
+        {%- if product.description != blank -%}
+          <div class="product-page__description">
+            <h3>Description</h3>
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mobile Sticky Add to Cart -->
+{%- render 'sticky-add-to-cart', product: product -%}
+
+<style>
+  .product-page__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-8);
+  }
+
+  @media (min-width: 768px) {
+    .product-page__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-12);
+    }
+  }
+
+  .product-page__title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-3);
+  }
+
+  .product-page__vendor {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .product-page__price-wrapper {
+    margin-bottom: var(--spacing-6);
+  }
+
+  .product-page__price {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+  }
+
+  .product-page__price-regular,
+  .product-page__price-sale {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+  }
+
+  .product-page__price-sale {
+    color: var(--color-cta-red);
+  }
+
+  .product-page__price-compare {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+  }
+
+  .product-page__price-badge {
+    padding: var(--spacing-1) var(--spacing-3);
+    background-color: var(--color-cta-orange);
+    color: white;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    border-radius: var(--radius-full);
+  }
+
+  .product-form {
+    margin-bottom: var(--spacing-6);
+  }
+
+  .product-form__option {
+    margin-bottom: var(--spacing-4);
+  }
+
+  .product-form__option label {
+    display: block;
+    margin-bottom: var(--spacing-2);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .product-form__select {
+    width: 100%;
+  }
+
+  .product-form__quantity {
+    margin-bottom: var(--spacing-6);
+  }
+
+  .product-form__quantity label {
+    display: block;
+    margin-bottom: var(--spacing-2);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    max-width: 150px;
+  }
+
+  .quantity-button {
+    width: 40px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--font-size-xl);
+    transition: background-color var(--transition-base);
+  }
+
+  .quantity-button:hover {
+    background-color: var(--color-bg-tertiary);
+  }
+
+  .quantity-input {
+    flex: 1;
+    text-align: center;
+    font-weight: var(--font-weight-medium);
+  }
+
+  .product-form__buttons {
+    margin-bottom: var(--spacing-6);
+  }
+
+  .product-page__description {
+    padding-top: var(--spacing-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .product-page__description h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-4);
+  }
+</style>
+
+<script>
+  // Quantity Selector
+  document.querySelectorAll('[data-quantity-minus]').forEach(button => {
+    button.addEventListener('click', () => {
+      const input = button.parentElement.querySelector('[data-quantity-input]');
+      const currentValue = parseInt(input.value) || 1;
+      if (currentValue > 1) {
+        input.value = currentValue - 1;
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-quantity-plus]').forEach(button => {
+    button.addEventListener('click', () => {
+      const input = button.parentElement.querySelector('[data-quantity-input]');
+      const currentValue = parseInt(input.value) || 1;
+      input.value = currentValue + 1;
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Product Information",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show Vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_urgency",
+      "label": "Show Urgency Timer",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

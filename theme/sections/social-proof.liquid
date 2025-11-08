@@ -1,0 +1,113 @@
+<section class="social-proof py-8" style="background-color: var(--color-bg-secondary);">
+  <div class="container">
+    <div class="social-proof__stats">
+      <div class="social-proof__stat">
+        <div class="social-proof__stat-value">{{ section.settings.stat1_value }}</div>
+        <div class="social-proof__stat-label">{{ section.settings.stat1_label }}</div>
+      </div>
+      <div class="social-proof__stat">
+        <div class="social-proof__stat-value">{{ section.settings.stat2_value }}</div>
+        <div class="social-proof__stat-label">{{ section.settings.stat2_label }}</div>
+      </div>
+      <div class="social-proof__stat">
+        <div class="social-proof__stat-value">{{ section.settings.stat3_value }}</div>
+        <div class="social-proof__stat-label">{{ section.settings.stat3_label }}</div>
+      </div>
+      <div class="social-proof__stat">
+        <div class="social-proof__stat-value">{{ section.settings.stat4_value }}</div>
+        <div class="social-proof__stat-label">{{ section.settings.stat4_label }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .social-proof__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-6);
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .social-proof__stats {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-8);
+    }
+  }
+
+  .social-proof__stat-value {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-brand-primary);
+    font-family: var(--font-heading);
+    margin-bottom: var(--spacing-2);
+  }
+
+  .social-proof__stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Social Proof Stats",
+  "settings": [
+    {
+      "type": "text",
+      "id": "stat1_value",
+      "label": "Stat 1 Value",
+      "default": "10,000+"
+    },
+    {
+      "type": "text",
+      "id": "stat1_label",
+      "label": "Stat 1 Label",
+      "default": "Happy Customers"
+    },
+    {
+      "type": "text",
+      "id": "stat2_value",
+      "label": "Stat 2 Value",
+      "default": "4.8/5"
+    },
+    {
+      "type": "text",
+      "id": "stat2_label",
+      "label": "Stat 2 Label",
+      "default": "Average Rating"
+    },
+    {
+      "type": "text",
+      "id": "stat3_value",
+      "label": "Stat 3 Value",
+      "default": "24/7"
+    },
+    {
+      "type": "text",
+      "id": "stat3_label",
+      "label": "Stat 3 Label",
+      "default": "Customer Support"
+    },
+    {
+      "type": "text",
+      "id": "stat4_value",
+      "label": "Stat 4 Value",
+      "default": "Free"
+    },
+    {
+      "type": "text",
+      "id": "stat4_label",
+      "label": "Stat 4 Label",
+      "default": "Shipping Over $50"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social Proof Stats"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,137 @@
+<div class="product-gallery">
+  {%- if product.images.size > 0 -%}
+    <!-- Main Image -->
+    <div class="product-gallery__main">
+      <img
+        id="main-product-image"
+        src="{{ product.featured_image | img_url: '800x' }}"
+        alt="{{ product.featured_image.alt | escape }}"
+        class="product-gallery__main-image"
+        data-main-image
+      >
+    </div>
+
+    <!-- Thumbnails -->
+    {%- if product.images.size > 1 -%}
+      <div class="product-gallery__thumbnails">
+        {%- for image in product.images limit: 8 -%}
+          <button
+            type="button"
+            class="product-gallery__thumbnail {% if forloop.first %}active{% endif %}"
+            data-thumbnail
+            data-image-src="{{ image | img_url: '800x' }}"
+          >
+            <img
+              src="{{ image | img_url: '100x' }}"
+              alt="{{ image.alt | escape }}"
+              loading="lazy"
+            >
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="product-gallery__placeholder">
+      {{ 'product-1' | placeholder_svg_tag }}
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .product-gallery {
+    position: relative;
+  }
+
+  .product-gallery__main {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .product-gallery__main-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: zoom-in;
+    transition: transform var(--transition-slow);
+  }
+
+  .product-gallery__main-image:hover {
+    transform: scale(1.05);
+  }
+
+  .product-gallery__thumbnails {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: var(--spacing-2);
+  }
+
+  .product-gallery__thumbnail {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    background-color: var(--color-bg-secondary);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color var(--transition-base);
+  }
+
+  .product-gallery__thumbnail:hover {
+    border-color: var(--color-brand-primary);
+  }
+
+  .product-gallery__thumbnail.active {
+    border-color: var(--color-brand-primary);
+  }
+
+  .product-gallery__thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-gallery__placeholder {
+    width: 100%;
+    padding-bottom: 100%;
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-gallery__placeholder svg {
+    width: 50%;
+    height: 50%;
+    opacity: 0.3;
+  }
+</style>
+
+<script>
+  // Product Gallery
+  document.querySelectorAll('[data-thumbnail]').forEach(thumbnail => {
+    thumbnail.addEventListener('click', function() {
+      const mainImage = document.querySelector('[data-main-image]');
+      const newSrc = this.dataset.imageSrc;
+
+      // Update main image
+      mainImage.src = newSrc;
+
+      // Update active state
+      document.querySelectorAll('[data-thumbnail]').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>

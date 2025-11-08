@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   {%- render 'meta-tags' -%}
+  {%- render 'preload-assets' -%}
+  {%- render 'structured-data' -%}
 
   <title>
     {{ page_title }}
@@ -27,6 +29,7 @@
   <!-- CSS Assets -->
   {{ 'base.css' | asset_url | stylesheet_tag }}
   {{ 'header.css' | asset_url | stylesheet_tag }}
+  {{ 'mobile-enhancements.css' | asset_url | stylesheet_tag }}
 
   <!-- JavaScript Assets -->
   <script src="{{ 'global.js' | asset_url }}" defer></script>

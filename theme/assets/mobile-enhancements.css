@@ -1,0 +1,254 @@
+/* ===================================
+   MOBILE UX ENHANCEMENTS
+   =================================== */
+
+/* Touch-Friendly Tap Targets - Minimum 48x48px */
+@media (max-width: 767px) {
+  /* Ensure all interactive elements meet 48px minimum */
+  button,
+  a.btn,
+  input[type="submit"],
+  input[type="button"],
+  .product-card,
+  .product-gallery__thumbnail,
+  .quantity-button {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* Product Card Touch Optimization */
+  .product-card {
+    padding: var(--spacing-3);
+  }
+
+  .product-card__image-wrapper {
+    margin-bottom: var(--spacing-3);
+  }
+
+  /* Larger Text for Readability */
+  body {
+    font-size: 16px; /* Prevents iOS zoom on input focus */
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px; /* Prevents iOS zoom */
+  }
+
+  /* Thumb Zone Optimization - Bottom 40% of screen */
+  .mobile-thumb-zone {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 900;
+  }
+
+  /* Improved Mobile Forms */
+  .product-form__option,
+  .product-form__quantity {
+    margin-bottom: var(--spacing-6);
+  }
+
+  .product-form__select,
+  .quantity-input {
+    min-height: 48px;
+    font-size: 16px;
+    padding: var(--spacing-3);
+  }
+
+  /* Mobile Navigation - Full Width Touch */
+  .header__menu-item {
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* Cart Drawer - Easy Reach */
+  .cart-drawer__footer {
+    padding: var(--spacing-6) var(--spacing-4);
+    position: sticky;
+    bottom: 0;
+    background-color: var(--color-bg-primary);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .cart-drawer__checkout {
+    min-height: 56px;
+    font-size: var(--font-size-lg);
+  }
+
+  /* Product Gallery - Swipe-Friendly */
+  .product-gallery__main {
+    margin-bottom: var(--spacing-6);
+  }
+
+  .product-gallery__thumbnails {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-3);
+  }
+
+  /* Collection Filters - Full Screen on Mobile */
+  .collection-page__sidebar {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Spacing Adjustments for Mobile */
+  section {
+    padding-top: var(--spacing-8);
+    padding-bottom: var(--spacing-8);
+  }
+
+  .container {
+    padding-left: var(--spacing-4);
+    padding-right: var(--spacing-4);
+  }
+
+  /* Mobile-Specific Grid Adjustments */
+  .grid-cols-2 {
+    gap: var(--spacing-4);
+  }
+
+  /* Sticky Elements - Safe Area Insets */
+  .sticky-atc,
+  .header,
+  .announcement-bar {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .sticky-atc {
+    padding-bottom: calc(var(--spacing-3) + env(safe-area-inset-bottom));
+  }
+
+  /* Modal/Drawer Safe Areas */
+  .cart-drawer,
+  .collection-page__sidebar {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Improved Modal Overlay */
+  .overlay {
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+
+  /* Prevent Horizontal Scroll */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Optimize Images for Mobile */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Touch Feedback */
+  button:active,
+  a.btn:active,
+  .product-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  /* Smooth Scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Reduce Motion for Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Landscape Mobile Optimizations */
+@media (max-width: 767px) and (orientation: landscape) {
+  /* Reduce vertical spacing in landscape */
+  section {
+    padding-top: var(--spacing-6);
+    padding-bottom: var(--spacing-6);
+  }
+
+  .hero-banner {
+    min-height: 60vh;
+  }
+
+  /* Sticky header takes less space */
+  .header {
+    padding-top: var(--spacing-2);
+    padding-bottom: var(--spacing-2);
+  }
+}
+
+/* iOS-Specific Fixes */
+@supports (-webkit-touch-callout: none) {
+  /* Fix iOS input zoom */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  /* Fix iOS button appearance */
+  button,
+  input[type="submit"],
+  input[type="button"] {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* Smooth momentum scrolling */
+  .cart-drawer,
+  .mobile-menu,
+  .collection-page__sidebar {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Android-Specific Optimizations */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23333' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+  }
+}
+
+/* Tablet Optimizations (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* 3-column product grid for tablets */
+  .product-grid.grid-cols-2.md\:grid-cols-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Tablet-friendly touch targets */
+  button,
+  a.btn {
+    min-height: 44px;
+  }
+
+  /* Adjusted spacing */
+  .container {
+    padding-left: var(--spacing-6);
+    padding-right: var(--spacing-6);
+  }
+}
+
+/* High DPI Screens - Image Optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Placeholder for retina-specific styles if needed */
+}

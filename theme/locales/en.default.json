@@ -77,6 +77,15 @@
         "secure_checkout": "Secure Checkout Guaranteed",
         "easy_returns": "30-Day Easy Returns",
         "warranty": "1-Year Warranty"
+      },
+      "urgency": {
+        "title": "Limited Time Offer Ends In:"
+      },
+      "stock": {
+        "in_stock": "In Stock - Ready to Ship",
+        "only_one_left": "Only 1 left in stock!",
+        "only_x_left": "Only {{ count }} left in stock!",
+        "out_of_stock": "Out of Stock"
       }
     },
     "collection": {
@@ -88,6 +97,34 @@
         "other": "{{ count }} products"
       },
       "no_products": "No products found"
+    }
+  },
+  "collections": {
+    "general": {
+      "product": "product",
+      "products": "products",
+      "no_products": "No products in this collection"
+    },
+    "filter": {
+      "filter_button": "Filter",
+      "filters": "Filters",
+      "price": "Price",
+      "availability": "Availability",
+      "in_stock": "In Stock",
+      "out_of_stock": "Out of Stock",
+      "apply": "Apply Filters",
+      "clear": "Clear"
+    },
+    "sorting": {
+      "title": "Sort by",
+      "featured": "Featured",
+      "best_selling": "Best Selling",
+      "az": "A-Z",
+      "za": "Z-A",
+      "price_ascending": "Price: Low to High",
+      "price_descending": "Price: High to Low",
+      "date_ascending": "Date: Old to New",
+      "date_descending": "Date: New to Old"
     }
   },
   "cart": {

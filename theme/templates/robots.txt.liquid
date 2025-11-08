@@ -1,0 +1,23 @@
+# robots.txt for {{ shop.name }}
+User-agent: *
+Disallow: /admin
+Disallow: /cart
+Disallow: /orders
+Disallow: /checkouts/
+Disallow: /checkout
+Disallow: /*/checkouts
+Disallow: /*/checkout
+Disallow: /carts
+Disallow: /account
+Disallow: /collections/*sort_by*
+Disallow: /*/collections/*sort_by*
+Disallow: /collections/*+*
+Disallow: /*/collections/*+*
+Disallow: /*/products/*+*
+Disallow: /products/*+*
+Disallow: /pages/*+*
+Disallow: /*/pages/*+*
+Disallow: /search
+Disallow: /apple-app-site-association
+
+Sitemap: https://{{ shop.domain }}/sitemap.xml

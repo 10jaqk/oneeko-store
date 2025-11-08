@@ -1,0 +1,28 @@
+{%- comment -%}
+  Preload critical assets for better performance
+{%- endcomment -%}
+
+<!-- Preload critical fonts -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" as="style">
+
+<!-- Preload critical CSS -->
+<link rel="preload" href="{{ 'base.css' | asset_url }}" as="style">
+
+<!-- Preload hero image on homepage -->
+{%- if template.name == 'index' -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'hero-banner' and block.settings.image != blank -%}
+      <link rel="preload" as="image" href="{{ block.settings.image | img_url: '1500x' }}">
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+<!-- Preload product images -->
+{%- if template.name == 'product' and product.featured_image -%}
+  <link rel="preload" as="image" href="{{ product.featured_image | img_url: '800x' }}">
+{%- endif -%}
+
+<!-- DNS Prefetch for external resources -->
+<link rel="dns-prefetch" href="https://cdn.shopify.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
