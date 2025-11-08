@@ -30,9 +30,15 @@
   {{ 'base.css' | asset_url | stylesheet_tag }}
   {{ 'header.css' | asset_url | stylesheet_tag }}
   {{ 'mobile-enhancements.css' | asset_url | stylesheet_tag }}
+  {%- if template.name == 'product' -%}
+    {{ 'product-gallery.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
 
   <!-- JavaScript Assets -->
   <script src="{{ 'global.js' | asset_url }}" defer></script>
+  {%- if template.name == 'product' -%}
+    <script src="{{ 'product-gallery.js' | asset_url }}" defer></script>
+  {%- endif -%}
 
   {{ content_for_header }}
 </head>

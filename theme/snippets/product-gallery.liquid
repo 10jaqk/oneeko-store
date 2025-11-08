@@ -1,4 +1,4 @@
-<div class="product-gallery">
+<div class="product-gallery" data-product-gallery>
   {%- if product.images.size > 0 -%}
     <!-- Main Image -->
     <div class="product-gallery__main">
@@ -8,6 +8,7 @@
         alt="{{ product.featured_image.alt | escape }}"
         class="product-gallery__main-image"
         data-main-image
+        loading="eager"
       >
     </div>
 

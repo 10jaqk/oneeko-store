@@ -1,10 +1,40 @@
-<section class="error-404 py-12">
-  <div class="container text-center">
-    <h1 class="error-404__title">{{ 'general.404.title' | t }}</h1>
-    <p class="error-404__text">{{ 'general.404.subtext' | t }}</p>
-    <a href="{{ routes.root_url }}" class="btn btn-primary">
-      {{ 'general.breadcrumbs.home' | t }}
-    </a>
+<section class="error-404 py-12 text-center">
+  <div class="container" style="max-width: 720px;">
+    <div class="error-404__icon mb-6">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
+
+    <h1 class="error-404__title">Page Not Found</h1>
+    <p class="error-404__message">
+      Lost the thread? Try a search, or head back to the catalog. If you need help, email
+      <a href="mailto:team@oneeko.ai">team@oneeko.ai</a> or call
+      <a href="tel:+14419010396">+1 441 901 0396</a>.
+    </p>
+
+    <!-- Search Box -->
+    <div class="error-404__search">
+      <form action="/search" method="get" class="search-form-404">
+        <input
+          type="search"
+          name="q"
+          placeholder="Search products..."
+          class="search-input-404"
+          aria-label="Search"
+        >
+        <button type="submit" class="btn btn-primary">
+          Search
+        </button>
+      </form>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="error-404__links">
+      <a href="/" class="btn btn-secondary">Return Home</a>
+      <a href="/collections/all" class="btn btn-secondary">Browse Catalog</a>
+      <a href="/pages/contact" class="btn btn-secondary">Get Help</a>
+    </div>
   </div>
 </section>
 
@@ -16,15 +46,75 @@
     justify-content: center;
   }
 
+  .error-404__icon {
+    display: flex;
+    justify-content: center;
+  }
+
+  .error-404__icon svg {
+    width: 80px;
+    height: 80px;
+    color: var(--color-brand-primary);
+  }
+
   .error-404__title {
-    font-size: var(--font-size-4xl);
+    font-size: clamp(32px, 6vw, 48px);
     margin-bottom: var(--spacing-4);
   }
 
-  .error-404__text {
-    font-size: var(--font-size-lg);
+  .error-404__message {
+    font-size: clamp(16px, 2.5vw, 18px);
     color: var(--color-text-secondary);
     margin-bottom: var(--spacing-8);
+    line-height: 1.6;
+  }
+
+  .error-404__message a {
+    color: var(--color-brand-primary);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+  }
+
+  .error-404__message a:hover {
+    text-decoration: underline;
+  }
+
+  .error-404__search {
+    margin-bottom: var(--spacing-8);
+  }
+
+  .search-form-404 {
+    display: flex;
+    gap: var(--spacing-3);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .search-input-404 {
+    flex: 1;
+    min-width: 0;
+    font-size: clamp(14px, 2.8vw, 18px);
+  }
+
+  .error-404__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+    justify-content: center;
+  }
+
+  @media (max-width: 767px) {
+    .search-form-404 {
+      flex-direction: column;
+    }
+
+    .error-404__links {
+      flex-direction: column;
+    }
+
+    .error-404__links .btn {
+      width: 100%;
+    }
   }
 </style>
 
