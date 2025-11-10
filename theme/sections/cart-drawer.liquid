@@ -207,17 +207,18 @@
   /* === BODY === */
   .cart-drawer__body {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .cart-drawer__items {
+    flex: 1;
     overflow-y: auto;
     padding: 20px 24px;
     display: flex;
     flex-direction: column;
-  }
-
-  .cart-drawer__items {
-    display: flex;
-    flex-direction: column;
     gap: 16px;
-    margin-bottom: 20px;
   }
 
   /* === CART ITEM === */
@@ -370,12 +371,18 @@
     text-decoration: underline;
   }
 
+  /* Free shipping bar positioning */
+  .free-shipping-bar {
+    flex-shrink: 0;
+    margin: 0 24px 16px 24px;
+  }
+
   /* === FOOTER === */
   .cart-drawer__footer {
-    padding: 20px 0 0;
+    padding: 20px 24px;
     border-top: 1px solid #e5e5e5;
-    margin-top: auto;
     flex-shrink: 0;
+    background-color: #fff;
   }
 
   .cart-drawer__subtotal {
