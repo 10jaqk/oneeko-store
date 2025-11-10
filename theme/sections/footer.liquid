@@ -84,6 +84,52 @@
         </div>
       </div>
 
+      <!-- Security & Trust Badges -->
+      {%- assign security_badges = section.blocks | where: "type", "security_badge" -%}
+      {%- if security_badges.size > 0 -%}
+        <div class="footer__security-badges">
+          <div class="footer__security-badges-grid">
+            {%- for block in security_badges -%}
+              <div class="footer__security-badge" {{ block.shopify_attributes }}>
+                <div class="footer__security-badge-icon">
+                  {%- case block.settings.badge_type -%}
+                    {%- when 'ssl_secure' -%}
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    {%- when 'money_back' -%}
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M16 18a5 5 0 01-8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                    {%- when 'free_shipping' -%}
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                        <path d="M1 3h15v13H1V3zM16 8h4l3 3v5h-7V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="5.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="18.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    {%- when 'secure_checkout' -%}
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                        <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
+                        <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="12" cy="16" r="1" fill="currentColor"/>
+                      </svg>
+                  {%- endcase -%}
+                </div>
+                <div class="footer__security-badge-text">
+                  <strong>{{ block.settings.badge_title }}</strong>
+                  {%- if block.settings.badge_subtitle != blank -%}
+                    <span>{{ block.settings.badge_subtitle }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
       <!-- Social Media Links -->
       {%- if section.settings.show_social -%}
         <div class="footer__social">
@@ -226,6 +272,77 @@
     width: auto;
   }
 
+  .footer__security-badges {
+    text-align: center;
+    margin-bottom: var(--spacing-6);
+    padding: var(--spacing-6) 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .footer__security-badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-4);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .footer__security-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-4);
+    background-color: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+  }
+
+  .footer__security-badge:hover {
+    border-color: var(--color-brand-primary);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .footer__security-badge-icon {
+    flex-shrink: 0;
+    color: var(--color-brand-primary);
+  }
+
+  .footer__security-badge-text {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .footer__security-badge-text strong {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+  }
+
+  .footer__security-badge-text span {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 767px) {
+    .footer__security-badges-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-3);
+    }
+
+    .footer__security-badge {
+      flex-direction: column;
+      text-align: center;
+      padding: var(--spacing-3);
+    }
+
+    .footer__security-badge-text {
+      text-align: center;
+    }
+  }
+
   .footer__social {
     display: flex;
     align-items: center;
@@ -363,6 +480,36 @@
             { "value": "google_pay", "label": "Google Pay" }
           ],
           "default": "visa"
+        }
+      ]
+    },
+    {
+      "type": "security_badge",
+      "name": "Security Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "badge_type",
+          "label": "Badge Type",
+          "options": [
+            { "value": "ssl_secure", "label": "SSL Secure" },
+            { "value": "money_back", "label": "Money Back Guarantee" },
+            { "value": "free_shipping", "label": "Free Shipping" },
+            { "value": "secure_checkout", "label": "Secure Checkout" }
+          ],
+          "default": "ssl_secure"
+        },
+        {
+          "type": "text",
+          "id": "badge_title",
+          "label": "Badge Title",
+          "default": "Secure Shopping"
+        },
+        {
+          "type": "text",
+          "id": "badge_subtitle",
+          "label": "Badge Subtitle (Optional)",
+          "default": "SSL Encrypted"
         }
       ]
     }

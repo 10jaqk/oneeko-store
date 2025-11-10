@@ -1,0 +1,85 @@
+{
+  "sections": {
+    "faq_section": {
+      "type": "faq",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "subtitle": "Find answers to common questions about our products, shipping, and policies",
+        "show_contact_cta": true,
+        "contact_text": "Still have questions?",
+        "contact_button_text": "Contact Us"
+      },
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard shipping takes 3-5 business days within the continental US. Express shipping (1-2 days) is available at checkout for an additional fee.</p><p>Free shipping is available on all orders over $50!</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>We offer a 30-day money-back guarantee on all products. If you're not completely satisfied, simply return the item within 30 days for a full refund.</p><p>Items must be in original condition with tags attached. Shipping costs for returns are the responsibility of the customer unless the item is defective.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>Yes! We ship worldwide. International shipping times vary by location:</p><ul><li>Canada: 7-10 business days</li><li>Europe: 10-14 business days</li><li>Asia/Pacific: 12-16 business days</li><li>Other regions: 14-21 business days</li></ul><p>International customers are responsible for any customs fees or import duties.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>We accept all major payment methods including:</p><ul><li>Visa, Mastercard, American Express, Discover</li><li>PayPal</li><li>Shop Pay</li><li>Apple Pay</li><li>Google Pay</li></ul><p>All transactions are encrypted and secure.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's your warranty policy?",
+            "answer": "<p>All products come with a 1-year manufacturer warranty covering defects in materials and workmanship.</p><p>If you experience any issues, contact us and we'll help resolve it quickly.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I track my order?",
+            "answer": "<p>Once your order ships, you'll receive a tracking number via email. You can use this number to track your package on our website or the carrier's website.</p><p>If you haven't received a tracking number within 2 business days, please contact us.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I cancel or modify my order?",
+            "answer": "<p>Orders can be cancelled or modified within 2 hours of placement. After that, orders are processed and shipped quickly.</p><p>If you need to make changes, contact us immediately at support@oneeko.com or use our live chat.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you offer wholesale or bulk discounts?",
+            "answer": "<p>Yes! We offer special pricing for bulk orders and wholesale customers.</p><p>For orders of 50+ units, please contact our wholesale team at wholesale@oneeko.com for custom pricing.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8"
+      ]
+    }
+  },
+  "order": [
+    "faq_section"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "about_section": {
+      "type": "about",
+      "settings": {
+        "title": "About OneEko",
+        "show_cta": true,
+        "cta_text": "Shop Our Collection",
+        "cta_link": "/collections/all"
+      },
+      "blocks": {
+        "story": {
+          "type": "story",
+          "settings": {
+            "story_title": "Our Story",
+            "story_text": "<p>Founded with a passion for quality and customer service, OneEko has grown from a small startup to a trusted online retailer serving thousands of happy customers.</p><p>We believe that online shopping should be easy, affordable, and enjoyable. That's why we carefully curate our product selection, negotiate the best prices, and provide exceptional customer support every step of the way.</p>"
+          }
+        },
+        "values": {
+          "type": "values",
+          "settings": {
+            "values_title": "What We Stand For",
+            "value_1_title": "Quality First",
+            "value_1_text": "We source only the best materials and work with trusted manufacturers to ensure every product meets our high standards.",
+            "value_2_title": "Customer Focus",
+            "value_2_text": "Your satisfaction is our top priority. We're here to help with fast shipping, easy returns, and responsive support.",
+            "value_3_title": "Fair Prices",
+            "value_3_text": "Great products shouldn't break the bank. We negotiate directly with suppliers to bring you the best value."
+          }
+        },
+        "mission": {
+          "type": "mission",
+          "settings": {
+            "mission_title": "Our Mission",
+            "mission_text": "<p>To provide exceptional products and service that improve the lives of our customers while building a sustainable, customer-first business.</p><p>We're committed to transparency, quality, and making online shopping a positive experience for everyone.</p>"
+          }
+        },
+        "team": {
+          "type": "team",
+          "settings": {
+            "team_title": "Our Team",
+            "team_text": "<p>We're a small but passionate team of product enthusiasts, customer service experts, and logistics professionals working together to bring you the best shopping experience possible.</p><p>Every member of our team is dedicated to your satisfaction and works hard to ensure your order arrives quickly and in perfect condition.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "story",
+        "values",
+        "mission",
+        "team"
+      ]
+    }
+  },
+  "order": [
+    "about_section"
+  ]
+}

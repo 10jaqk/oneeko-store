@@ -1,0 +1,137 @@
+{%- comment -%}
+  Free Shipping Progress Bar
+  Shows progress toward free shipping threshold ($50)
+
+  Usage:
+  {%- render 'free-shipping-bar' -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign free_shipping_threshold = 5000
+  assign cart_total = cart.total_price
+  assign remaining = free_shipping_threshold | minus: cart_total
+  assign percentage = cart_total | times: 100 | divided_by: free_shipping_threshold
+
+  if percentage > 100
+    assign percentage = 100
+  endif
+-%}
+
+<div class="free-shipping-bar" data-free-shipping-bar>
+  <div class="free-shipping-bar__content">
+    {%- if remaining > 0 -%}
+      <p class="free-shipping-bar__message">
+        <svg class="free-shipping-bar__icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M13 1H2v13h11V1zM17 6h-3v8h3l2 2V4l-2 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Add <strong>{{ remaining | money }}</strong> more to qualify for <strong>FREE SHIPPING!</strong>
+      </p>
+    {%- else -%}
+      <p class="free-shipping-bar__message free-shipping-bar__message--success">
+        <svg class="free-shipping-bar__icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M7 10l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <strong>Congrats! You've unlocked FREE SHIPPING!</strong> 🎉
+      </p>
+    {%- endif -%}
+
+    <div class="free-shipping-bar__progress">
+      <div class="free-shipping-bar__progress-fill" style="width: {{ percentage }}%" data-progress="{{ percentage }}"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .free-shipping-bar {
+    background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+    border: 1px solid #BAE6FD;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .free-shipping-bar__content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .free-shipping-bar__message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--spacing-3) 0;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .free-shipping-bar__message--success {
+    color: var(--color-success);
+  }
+
+  .free-shipping-bar__icon {
+    flex-shrink: 0;
+  }
+
+  .free-shipping-bar__message strong {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .free-shipping-bar__progress {
+    width: 100%;
+    height: 8px;
+    background-color: #E0F2FE;
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .free-shipping-bar__progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563EB 0%, #10B981 100%);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+    position: relative;
+  }
+
+  .free-shipping-bar__progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Success state - green background */
+  .free-shipping-bar:has(.free-shipping-bar__message--success) {
+    background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+    border-color: #BBF7D0;
+  }
+
+  .free-shipping-bar:has(.free-shipping-bar__message--success) .free-shipping-bar__progress {
+    background-color: #DCFCE7;
+  }
+
+  .free-shipping-bar:has(.free-shipping-bar__message--success) .free-shipping-bar__progress-fill {
+    background: linear-gradient(90deg, #10B981 0%, #059669 100%);
+  }
+
+  @media (max-width: 767px) {
+    .free-shipping-bar__message {
+      font-size: var(--font-size-xs);
+    }
+  }
+</style>

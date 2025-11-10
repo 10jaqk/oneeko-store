@@ -1,0 +1,265 @@
+<section class="faq-section py-16">
+  <div class="container">
+    <div class="faq-header">
+      {%- if section.settings.title != blank -%}
+        <h1 class="faq-title">{{ section.settings.title }}</h1>
+      {%- endif -%}
+
+      {%- if section.settings.subtitle != blank -%}
+        <p class="faq-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="faq-grid">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'faq_item' -%}
+            <details class="faq-item" {{ block.shopify_attributes }}>
+              <summary class="faq-question">
+                {{ block.settings.question }}
+                <svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </summary>
+              <div class="faq-answer rte">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_contact_cta -%}
+      <div class="faq-cta">
+        <p>{{ section.settings.contact_text | default: "Still have questions?" }}</p>
+        <a href="/pages/contact" class="btn btn-primary">
+          {{ section.settings.contact_button_text | default: "Contact Us" }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    background-color: var(--color-bg-primary);
+  }
+
+  .faq-header {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-12);
+    text-align: center;
+  }
+
+  .faq-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .faq-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .faq-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+
+  .faq-item {
+    background-color: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-5);
+    transition: all var(--transition-base);
+  }
+
+  .faq-item:hover {
+    border-color: var(--color-brand-primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .faq-item[open] {
+    border-color: var(--color-brand-primary);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-4);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    transition: transform var(--transition-base);
+    color: var(--color-brand-primary);
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    margin-top: var(--spacing-4);
+    padding-top: var(--spacing-4);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .faq-answer p {
+    margin-bottom: var(--spacing-3);
+  }
+
+  .faq-answer p:last-child {
+    margin-bottom: 0;
+  }
+
+  .faq-cta {
+    max-width: 600px;
+    margin: var(--spacing-12) auto 0;
+    text-align: center;
+    padding: var(--spacing-8);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+  }
+
+  .faq-cta p {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  @media (max-width: 767px) {
+    .faq-title {
+      font-size: var(--font-size-3xl);
+    }
+
+    .faq-question {
+      font-size: var(--font-size-base);
+    }
+
+    .faq-item {
+      padding: var(--spacing-4);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Find answers to common questions about our products and services"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact_cta",
+      "label": "Show Contact CTA",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "contact_text",
+      "label": "Contact Text",
+      "default": "Still have questions?"
+    },
+    {
+      "type": "text",
+      "id": "contact_button_text",
+      "label": "Contact Button Text",
+      "default": "Contact Us"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>We offer a 30-day money-back guarantee on all products. If you're not satisfied, simply return the item for a full refund.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Section",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard shipping takes 3-5 business days. Express shipping (1-2 days) is available at checkout.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>We offer a 30-day money-back guarantee. If you're not satisfied, return within 30 days for a full refund. No questions asked.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>Yes! We ship worldwide. International shipping times vary by location (typically 7-14 business days).</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>We accept all major credit cards (Visa, Mastercard, Amex), PayPal, Shop Pay, Apple Pay, and Google Pay.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's your warranty policy?",
+            "answer": "<p>All products come with a 1-year manufacturer warranty covering defects in materials and workmanship.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

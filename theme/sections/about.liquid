@@ -1,0 +1,350 @@
+<section class="about-section py-16">
+  <div class="container">
+    {%- if section.settings.title != blank -%}
+      <h1 class="about-title">{{ section.settings.title }}</h1>
+    {%- endif -%}
+
+    <div class="about-content">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'story' -%}
+            <div class="about-story" {{ block.shopify_attributes }}>
+              {%- if block.settings.story_title != blank -%}
+                <h2 class="about-story__title">{{ block.settings.story_title }}</h2>
+              {%- endif -%}
+              <div class="about-story__text rte">
+                {{ block.settings.story_text }}
+              </div>
+            </div>
+
+          {%- when 'values' -%}
+            <div class="about-values" {{ block.shopify_attributes }}>
+              {%- if block.settings.values_title != blank -%}
+                <h2 class="about-values__title">{{ block.settings.values_title }}</h2>
+              {%- endif -%}
+              <div class="about-values__grid">
+                {%- if block.settings.value_1_title != blank -%}
+                  <div class="about-value">
+                    <h3>{{ block.settings.value_1_title }}</h3>
+                    <p>{{ block.settings.value_1_text }}</p>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.value_2_title != blank -%}
+                  <div class="about-value">
+                    <h3>{{ block.settings.value_2_title }}</h3>
+                    <p>{{ block.settings.value_2_text }}</p>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.value_3_title != blank -%}
+                  <div class="about-value">
+                    <h3>{{ block.settings.value_3_title }}</h3>
+                    <p>{{ block.settings.value_3_text }}</p>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+
+          {%- when 'mission' -%}
+            <div class="about-mission" {{ block.shopify_attributes }}>
+              {%- if block.settings.mission_title != blank -%}
+                <h2 class="about-mission__title">{{ block.settings.mission_title }}</h2>
+              {%- endif -%}
+              <div class="about-mission__text rte">
+                {{ block.settings.mission_text }}
+              </div>
+            </div>
+
+          {%- when 'team' -%}
+            <div class="about-team" {{ block.shopify_attributes }}>
+              {%- if block.settings.team_title != blank -%}
+                <h2 class="about-team__title">{{ block.settings.team_title }}</h2>
+              {%- endif -%}
+              <div class="about-team__text rte">
+                {{ block.settings.team_text }}
+              </div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_cta -%}
+      <div class="about-cta">
+        <a href="{{ section.settings.cta_link | default: '/collections/all' }}" class="btn btn-primary">
+          {{ section.settings.cta_text | default: "Shop Now" }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .about-section {
+    background-color: var(--color-bg-primary);
+  }
+
+  .about-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: var(--spacing-12);
+  }
+
+  .about-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-12);
+  }
+
+  .about-story,
+  .about-mission,
+  .about-team {
+    text-align: center;
+  }
+
+  .about-story__title,
+  .about-mission__title,
+  .about-team__title,
+  .about-values__title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .about-story__text,
+  .about-mission__text,
+  .about-team__text {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .about-story__text p,
+  .about-mission__text p,
+  .about-team__text p {
+    margin-bottom: var(--spacing-4);
+  }
+
+  .about-values {
+    background-color: var(--color-bg-secondary);
+    padding: var(--spacing-10);
+    border-radius: var(--radius-lg);
+  }
+
+  .about-values__title {
+    text-align: center;
+  }
+
+  .about-values__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-8);
+    margin-top: var(--spacing-8);
+  }
+
+  .about-value {
+    text-align: center;
+  }
+
+  .about-value h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-brand-primary);
+    margin-bottom: var(--spacing-3);
+  }
+
+  .about-value p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .about-cta {
+    text-align: center;
+    margin-top: var(--spacing-12);
+  }
+
+  @media (max-width: 767px) {
+    .about-title {
+      font-size: var(--font-size-3xl);
+    }
+
+    .about-story__title,
+    .about-mission__title,
+    .about-team__title,
+    .about-values__title {
+      font-size: var(--font-size-xl);
+    }
+
+    .about-story__text,
+    .about-mission__text,
+    .about-team__text {
+      font-size: var(--font-size-base);
+    }
+
+    .about-values {
+      padding: var(--spacing-6);
+    }
+
+    .about-values__grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-6);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "About Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "About Us"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show CTA Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "story",
+      "name": "Our Story",
+      "settings": [
+        {
+          "type": "text",
+          "id": "story_title",
+          "label": "Title",
+          "default": "Our Story"
+        },
+        {
+          "type": "richtext",
+          "id": "story_text",
+          "label": "Story Text",
+          "default": "<p>Founded in 2024, OneEko was born from a simple idea: everyone deserves access to quality products without compromise.</p>"
+        }
+      ]
+    },
+    {
+      "type": "values",
+      "name": "Our Values",
+      "settings": [
+        {
+          "type": "text",
+          "id": "values_title",
+          "label": "Title",
+          "default": "Our Values"
+        },
+        {
+          "type": "text",
+          "id": "value_1_title",
+          "label": "Value 1 Title",
+          "default": "Quality First"
+        },
+        {
+          "type": "textarea",
+          "id": "value_1_text",
+          "label": "Value 1 Text",
+          "default": "We source only the best materials and work with trusted manufacturers."
+        },
+        {
+          "type": "text",
+          "id": "value_2_title",
+          "label": "Value 2 Title",
+          "default": "Customer Focus"
+        },
+        {
+          "type": "textarea",
+          "id": "value_2_text",
+          "label": "Value 2 Text",
+          "default": "Your satisfaction is our top priority. We're here to help every step of the way."
+        },
+        {
+          "type": "text",
+          "id": "value_3_title",
+          "label": "Value 3 Title",
+          "default": "Fast Shipping"
+        },
+        {
+          "type": "textarea",
+          "id": "value_3_text",
+          "label": "Value 3 Text",
+          "default": "Get your orders quickly with our reliable shipping partners."
+        }
+      ]
+    },
+    {
+      "type": "mission",
+      "name": "Our Mission",
+      "settings": [
+        {
+          "type": "text",
+          "id": "mission_title",
+          "label": "Title",
+          "default": "Our Mission"
+        },
+        {
+          "type": "richtext",
+          "id": "mission_text",
+          "label": "Mission Text",
+          "default": "<p>To provide exceptional products and service that improve the lives of our customers.</p>"
+        }
+      ]
+    },
+    {
+      "type": "team",
+      "name": "Our Team",
+      "settings": [
+        {
+          "type": "text",
+          "id": "team_title",
+          "label": "Title",
+          "default": "Our Team"
+        },
+        {
+          "type": "richtext",
+          "id": "team_text",
+          "label": "Team Text",
+          "default": "<p>We're a small but passionate team dedicated to bringing you the best shopping experience.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Section",
+      "blocks": [
+        {
+          "type": "story"
+        },
+        {
+          "type": "values"
+        },
+        {
+          "type": "mission"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

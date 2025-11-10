@@ -1,10 +1,26 @@
 {
   "sections": {
-    "main": {
-      "type": "contact-form"
+    "contact_section": {
+      "type": "contact",
+      "settings": {
+        "title": "Contact Us",
+        "subtitle": "Have a question? We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+        "form_title": "Send us a message",
+        "button_text": "Send Message",
+        "success_message": "Thanks for contacting us! We'll get back to you within 24 hours.",
+        "info_title": "Contact Information",
+        "show_email": true,
+        "email": "support@oneeko.com",
+        "show_phone": true,
+        "phone": "(555) 123-4567",
+        "show_address": true,
+        "address": "123 Main Street\nNew York, NY 10001\nUnited States",
+        "show_hours": true,
+        "hours": "Monday - Friday: 9am - 6pm EST\nSaturday: 10am - 4pm EST\nSunday: Closed"
+      }
     }
   },
   "order": [
-    "main"
+    "contact_section"
   ]
 }
