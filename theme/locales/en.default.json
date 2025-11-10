@@ -137,6 +137,7 @@
       "checkout": "Checkout",
       "update": "Update Cart",
       "note": "Add a note to your order",
+      "note_placeholder": "Add a note for the seller (optional)",
       "remove": "Remove",
       "quantity": "Quantity"
     },

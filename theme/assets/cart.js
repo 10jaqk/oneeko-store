@@ -1,6 +1,6 @@
 /**
- * Oneeko Store - Cart Functionality
- * Handles Add to Cart, cart updates, and cart drawer
+ * Oneeko Store - Cart Functionality with Live AJAX Updates
+ * Handles Add to Cart, cart updates, and cart drawer with Section Rendering API
  */
 
 class CartManager {
@@ -13,6 +13,7 @@ class CartManager {
     this.setupCartUpdates();
     this.setupQuantityButtons();
     this.setupVariantSelectors();
+    this.setupCartDrawerClose();
   }
 
   /**
@@ -30,7 +31,7 @@ class CartManager {
   }
 
   /**
-   * Add product to cart via AJAX
+   * Add product to cart via AJAX with live drawer refresh
    */
   async addToCart(form) {
     const submitButton = form.querySelector('button[type="submit"]');
@@ -45,18 +46,14 @@ class CartManager {
     try {
       const formData = new FormData(form);
 
-      // Get variant ID from form or product page
+      // Get variant ID from form with fallbacks
       let variantId = formData.get('id');
-
-      // If no ID in form, try to get from product data
       if (!variantId) {
         const productData = form.closest('[data-product-id]');
         if (productData) {
           variantId = productData.dataset.variantId || productData.dataset.productId;
         }
       }
-
-      // If still no variant ID, get from meta or hidden input
       if (!variantId) {
         const variantInput = form.querySelector('input[name="id"], select[name="id"]');
         if (variantInput) {
@@ -86,18 +83,15 @@ class CartManager {
         throw new Error(errorData.description || 'Failed to add to cart');
       }
 
-      const item = await response.json();
+      await response.json();
 
       // Show success state
       if (submitButton) {
         submitButton.innerHTML = '<span>✓ Added!</span>';
       }
 
-      // Update cart count
-      await this.updateCartCount();
-
-      // Refresh cart drawer content
-      await this.refreshCartDrawer();
+      // Refresh cart drawer and count with Section Rendering API
+      await this.refreshCart();
 
       // Open cart drawer
       setTimeout(() => {
@@ -128,6 +122,43 @@ class CartManager {
   }
 
   /**
+   * Refresh cart drawer and cart count using Section Rendering API
+   */
+  async refreshCart() {
+    try {
+      // Fetch cart-drawer section and cart count
+      const url = '/?sections=cart-drawer';
+      const response = await fetch(url, {
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch cart sections');
+      }
+
+      const sections = await response.json();
+
+      // Update cart drawer if element exists
+      const cartDrawerElement = document.querySelector('[data-cart-drawer]');
+      if (cartDrawerElement && sections['cart-drawer']) {
+        cartDrawerElement.outerHTML = sections['cart-drawer'];
+
+        // Re-initialize cart drawer event listeners
+        this.setupCartDrawerClose();
+        this.setupCartUpdates();
+      }
+
+      // Update cart count
+      await this.updateCartCount();
+
+    } catch (error) {
+      console.error('Refresh cart error:', error);
+    }
+  }
+
+  /**
    * Update cart count badge
    */
   async updateCartCount() {
@@ -140,27 +171,12 @@ class CartManager {
         el.textContent = cart.item_count;
         if (cart.item_count > 0) {
           el.style.display = 'flex';
+        } else {
+          el.style.display = 'none';
         }
       });
     } catch (error) {
       console.error('Update cart count error:', error);
-    }
-  }
-
-  /**
-   * Refresh cart drawer content
-   */
-  async refreshCartDrawer() {
-    try {
-      const response = await fetch('/?sections=cart-drawer');
-      const data = await response.json();
-
-      // This would update the cart drawer HTML
-      // For now, we'll reload the page to show updated cart
-      // In a full implementation, you'd update the drawer HTML dynamically
-
-    } catch (error) {
-      console.error('Refresh cart drawer error:', error);
     }
   }
 
@@ -176,29 +192,71 @@ class CartManager {
   }
 
   /**
-   * Setup cart quantity updates
+   * Close cart drawer
+   */
+  closeCartDrawer() {
+    const cartDrawer = document.querySelector('[data-cart-drawer]');
+    if (cartDrawer) {
+      cartDrawer.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  /**
+   * Setup cart drawer close button and overlay
+   */
+  setupCartDrawerClose() {
+    // Close button
+    const closeButtons = document.querySelectorAll('[data-cart-close]');
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', () => this.closeCartDrawer());
+    });
+
+    // Close on overlay click
+    const cartDrawer = document.querySelector('[data-cart-drawer]');
+    if (cartDrawer) {
+      cartDrawer.addEventListener('click', (e) => {
+        if (e.target === cartDrawer) {
+          this.closeCartDrawer();
+        }
+      });
+    }
+
+    // Close on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.closeCartDrawer();
+      }
+    });
+  }
+
+  /**
+   * Setup cart quantity updates and remove buttons
    */
   setupCartUpdates() {
-    const cartItems = document.querySelectorAll('[data-cart-item-key]');
-
-    cartItems.forEach(input => {
-      input.addEventListener('change', (e) => {
-        this.updateCartItem(e.target.dataset.cartItemKey, e.target.value);
+    // Quantity inputs
+    const quantityInputs = document.querySelectorAll('[data-cart-item-key]');
+    quantityInputs.forEach(input => {
+      input.addEventListener('change', async (e) => {
+        const key = e.target.dataset.cartItemKey;
+        const quantity = parseInt(e.target.value);
+        await this.updateCartItem(key, quantity);
       });
     });
 
     // Remove buttons
     const removeButtons = document.querySelectorAll('[data-cart-remove]');
     removeButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', async (e) => {
         e.preventDefault();
-        this.updateCartItem(btn.dataset.cartRemove, 0);
+        const key = btn.dataset.cartRemove;
+        await this.updateCartItem(key, 0);
       });
     });
   }
 
   /**
-   * Update cart item quantity
+   * Update cart item quantity with live refresh
    */
   async updateCartItem(key, quantity) {
     try {
@@ -217,16 +275,18 @@ class CartManager {
         throw new Error('Failed to update cart');
       }
 
-      // Reload page to show updated cart
-      window.location.reload();
+      // Refresh cart drawer and count immediately
+      await this.refreshCart();
 
     } catch (error) {
       console.error('Update cart error:', error);
+      // Reload page as fallback
+      window.location.reload();
     }
   }
 
   /**
-   * Setup quantity selector buttons
+   * Setup quantity selector buttons (+ / -)
    */
   setupQuantityButtons() {
     // Plus buttons
