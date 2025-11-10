@@ -31,3 +31,12 @@ prisma/dev.db
 # Temp files
 *.tmp
 .cache/
+
+# Scripts with sensitive tokens
+scripts/
+*.sh
+
+# Image assets (too large for git)
+theme/assets/*.png
+theme/assets/*.jpg
+theme/assets/*.jpeg

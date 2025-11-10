@@ -1,5 +1,5 @@
-<section class="hero-banner" style="background-image: url('{{ section.settings.background_image | img_url: 'master' }}');">
-  <div class="hero-banner__overlay" style="background-color: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});"></div>
+<section class="hero-banner" style="background-image: url('{{ 'hero.banner.png' | asset_url }}'); background-size: cover; background-position: center bottom;">
+  <div class="hero-banner__overlay" style="background-color: rgba(0, 0, 0, 0.35);"></div>
 
   <div class="hero-banner__content container">
     <div class="hero-banner__text">

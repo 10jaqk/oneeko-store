@@ -1,0 +1,227 @@
+<section class="search-page py-16">
+  <div class="container">
+    <div class="search-page__header">
+      <h1 class="search-page__title">
+        {%- if search.performed -%}
+          {%- if search.results_count > 0 -%}
+            {{ search.results_count }}
+            {%- if search.results_count == 1 -%}
+              result
+            {%- else -%}
+              results
+            {%- endif -%}
+            for "{{ search.terms }}"
+          {%- else -%}
+            No results for "{{ search.terms }}"
+          {%- endif -%}
+        {%- else -%}
+          Search
+        {%- endif -%}
+      </h1>
+
+      {%- if search.performed -%}
+        <div class="search-page__search-again">
+          <form action="/search" method="get" class="search-form">
+            <div class="search-form__input-wrapper">
+              <input
+                type="search"
+                name="q"
+                value="{{ search.terms | escape }}"
+                placeholder="Search again..."
+                class="search-form__input"
+              >
+              <button type="submit" class="btn btn-primary">
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if search.performed and search.results_count > 0 -%}
+      <div class="search-page__results">
+        {%- paginate search.results by 24 -%}
+          <div class="product-grid grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4">
+            {%- for item in search.results -%}
+              {%- case item.object_type -%}
+                {%- when 'product' -%}
+                  {%- render 'product-card', product: item -%}
+                {%- when 'article' -%}
+                  <div class="search-result search-result--article">
+                    <a href="{{ item.url }}" class="search-result__link">
+                      <h3 class="search-result__title">{{ item.title }}</h3>
+                      <p class="search-result__type">Article</p>
+                      {%- if item.excerpt -%}
+                        <p class="search-result__excerpt">{{ item.excerpt | strip_html | truncate: 150 }}</p>
+                      {%- endif -%}
+                    </a>
+                  </div>
+                {%- when 'page' -%}
+                  <div class="search-result search-result--page">
+                    <a href="{{ item.url }}" class="search-result__link">
+                      <h3 class="search-result__title">{{ item.title }}</h3>
+                      <p class="search-result__type">Page</p>
+                      {%- if item.content -%}
+                        <p class="search-result__excerpt">{{ item.content | strip_html | truncate: 150 }}</p>
+                      {%- endif -%}
+                    </a>
+                  </div>
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <div class="pagination">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="pagination__item pagination__item--prev">
+                  Previous
+                </a>
+              {%- endif -%}
+
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" class="pagination__item">{{ part.title }}</a>
+                {%- else -%}
+                  <span class="pagination__item pagination__item--current">{{ part.title }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="pagination__item pagination__item--next">
+                  Next
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    {%- elsif search.performed -%}
+      <div class="search-page__no-results">
+        <p>Try searching for something else or browse our collections.</p>
+        <a href="/collections/all" class="btn btn-primary" style="margin-top: var(--spacing-4);">
+          Browse All Products
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .search-page__header {
+    text-align: center;
+    margin-bottom: var(--spacing-8);
+  }
+
+  .search-page__title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .search-form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .search-form__input-wrapper {
+    display: flex;
+    gap: var(--spacing-3);
+  }
+
+  .search-form__input {
+    flex: 1;
+  }
+
+  .search-page__results {
+    margin-top: var(--spacing-8);
+  }
+
+  .product-grid {
+    gap: var(--spacing-6);
+  }
+
+  @media (max-width: 640px) {
+    .product-grid {
+      gap: var(--spacing-4);
+    }
+  }
+
+  .search-result {
+    background-color: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+    transition: box-shadow var(--transition-base), border-color var(--transition-base);
+  }
+
+  .search-result:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-border-dark);
+  }
+
+  .search-result__link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .search-result__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-2);
+  }
+
+  .search-result__type {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-3);
+  }
+
+  .search-result__excerpt {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .search-page__no-results {
+    text-align: center;
+    padding: var(--spacing-12) 0;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-2);
+    margin-top: var(--spacing-8);
+  }
+
+  .pagination__item {
+    padding: var(--spacing-2) var(--spacing-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--color-text-primary);
+    transition: background-color var(--transition-base), border-color var(--transition-base);
+  }
+
+  .pagination__item:hover {
+    background-color: var(--color-bg-secondary);
+    border-color: var(--color-border-dark);
+  }
+
+  .pagination__item--current {
+    background-color: var(--color-brand-primary);
+    color: white;
+    border-color: var(--color-brand-primary);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Search Results",
+  "settings": []
+}
+{% endschema %}

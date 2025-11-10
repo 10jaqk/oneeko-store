@@ -1,21 +1,97 @@
 {
   "sections": {
     "hero-banner": {
-      "type": "hero-banner"
+      "type": "hero-banner",
+      "settings": {
+        "heading": "Premium Tech Accessories for Modern Life",
+        "subheading": "Free shipping on orders over $50 · 30-day returns",
+        "button_1_text": "Shop Now",
+        "button_1_link": "/collections/all",
+        "button_2_text": "Learn More",
+        "button_2_link": "/pages/contact"
+      }
     },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
         "title": "Best Sellers",
-        "collection": "",
+        "collection": "all",
         "products_to_show": 8
+      }
+    },
+    "featured-brands": {
+      "type": "featured-brands",
+      "settings": {
+        "title": "Shop by Brand",
+        "subtitle": "Trusted brands you love"
       }
     },
     "value-props": {
       "type": "value-props"
     },
     "testimonials": {
-      "type": "testimonials"
+      "type": "testimonials",
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "text": "I bought the portable monitor for my home office setup and it's been a game changer. The color accuracy is impressive and it was super easy to set up with my laptop. The stand is sturdy and the USB-C connection works perfectly. Worth every penny.",
+            "author": "Jessica Chen",
+            "product": "Portable Monitor"
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "text": "Fast shipping, great packaging, and the product quality exceeded my expectations. I've been using the wireless charging pad for 3 weeks now and it charges my iPhone and AirPods simultaneously without any issues. Super convenient for my nightstand.",
+            "author": "Marcus Rivera",
+            "product": "Wireless Charging Pad"
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "text": "Customer service was incredibly helpful when I had questions about compatibility with my MacBook Pro. The laptop stand is solid, well-designed, and my neck pain has improved significantly since using it. The aluminum finish looks premium too.",
+            "author": "Sarah Kim",
+            "product": "Aluminum Laptop Stand"
+          }
+        },
+        "testimonial-4": {
+          "type": "testimonial",
+          "settings": {
+            "text": "Ordered on Monday, arrived Wednesday. The build quality is excellent - you can tell these aren't cheap knockoffs. The magnetic cable organizer has finally tamed my desk chaos. My workspace looks so much cleaner now!",
+            "author": "David Patel",
+            "product": "Magnetic Cable Organizer"
+          }
+        },
+        "testimonial-5": {
+          "type": "testimonial",
+          "settings": {
+            "text": "I was skeptical about the price but after using these wireless earbuds for a month, I'm blown away. Battery life is solid, sound quality rivals my expensive Sony headphones, and they stay in my ears during workouts. Best tech purchase I've made this year.",
+            "author": "Emily Thompson",
+            "product": "Wireless Earbuds Pro"
+          }
+        },
+        "testimonial-6": {
+          "type": "testimonial",
+          "settings": {
+            "text": "The phone case arrived exactly as described with a nice matte finish that doesn't show fingerprints. It's slim but protective - survived a drop on concrete with zero damage to my phone. Plus the magnetic grip makes wireless charging effortless.",
+            "author": "James Okafor",
+            "product": "MagSafe Phone Case"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial-1",
+        "testimonial-2",
+        "testimonial-3",
+        "testimonial-4",
+        "testimonial-5",
+        "testimonial-6"
+      ],
+      "settings": {
+        "title": "What Our Customers Say"
+      }
     },
     "newsletter": {
       "type": "newsletter"
@@ -24,6 +100,7 @@
   "order": [
     "hero-banner",
     "featured-collection",
+    "featured-brands",
     "value-props",
     "testimonials",
     "newsletter"

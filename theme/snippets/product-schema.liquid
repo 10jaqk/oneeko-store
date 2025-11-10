@@ -1,0 +1,47 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign product_image = product.featured_image | default: current_variant.image
+-%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | truncate: 5000 | json }},
+  {%- if product_image -%}
+  "image": [
+    {{ product_image | image_url: width: 1200 | prepend: "https:" | json }}
+    {%- for image in product.images limit: 8 -%}
+      {%- unless image == product_image -%}
+        ,{{ image | image_url: width: 1200 | prepend: "https:" | json }}
+      {%- endunless -%}
+    {%- endfor -%}
+  ],
+  {%- endif -%}
+  "sku": {{ current_variant.sku | json }},
+  "mpn": {{ current_variant.barcode | default: current_variant.sku | json }},
+  "brand": {
+    "@type": "Brand",
+    "name": {{ product.vendor | json }}
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": {{ request.origin | append: product.url | json }},
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "price": {{ current_variant.price | divided_by: 100.0 | json }},
+    "availability": "https://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+    "seller": {
+      "@type": "Organization",
+      "name": {{ shop.name | json }}
+    }
+  }
+  {%- if product.metafields.reviews.rating.value -%}
+  ,"aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ product.metafields.reviews.rating.value | json }},
+    "reviewCount": {{ product.metafields.reviews.rating_count | json }}
+  }
+  {%- endif -%}
+}
+</script>

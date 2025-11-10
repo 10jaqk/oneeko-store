@@ -1,29 +1,35 @@
-<div class="product-gallery" data-product-gallery>
+<div class="op-gallery op-gallery--stacked" data-product-gallery>
   {%- if product.images.size > 0 -%}
     <!-- Main Image -->
-    <div class="product-gallery__main">
+    <div class="op-gallery__main pg-main">
       <img
         id="main-product-image"
-        src="{{ product.featured_image | img_url: '800x' }}"
+        src="{{ product.featured_image | img_url: '1000x' }}"
+        srcset="{{ product.featured_image | img_url: '400x' }} 400w,
+                {{ product.featured_image | img_url: '600x' }} 600w,
+                {{ product.featured_image | img_url: '800x' }} 800w,
+                {{ product.featured_image | img_url: '1000x' }} 1000w"
+        sizes="(max-width: 768px) 100vw, (max-width: 992px) 60vw, 800px"
         alt="{{ product.featured_image.alt | escape }}"
-        class="product-gallery__main-image"
+        class="pg-main-image"
         data-main-image
         loading="eager"
       >
     </div>
 
-    <!-- Thumbnails -->
+    <!-- Thumbnails (Below Main Image) -->
     {%- if product.images.size > 1 -%}
-      <div class="product-gallery__thumbnails">
-        {%- for image in product.images limit: 8 -%}
+      <div class="op-gallery__thumbs pg-thumbs" aria-label="Product thumbnails">
+        {%- for image in product.images limit: 10 -%}
           <button
             type="button"
-            class="product-gallery__thumbnail {% if forloop.first %}active{% endif %}"
+            class="thumb thumbnail-item {% if forloop.first %}active{% endif %}"
             data-thumbnail
-            data-image-src="{{ image | img_url: '800x' }}"
+            data-image-src="{{ image | img_url: '1000x' }}"
+            data-image-srcset="{{ image | img_url: '400x' }} 400w, {{ image | img_url: '600x' }} 600w, {{ image | img_url: '800x' }} 800w, {{ image | img_url: '1000x' }} 1000w"
           >
             <img
-              src="{{ image | img_url: '100x' }}"
+              src="{{ image | img_url: '120x' }}"
               alt="{{ image.alt | escape }}"
               loading="lazy"
             >
@@ -32,93 +38,12 @@
       </div>
     {%- endif -%}
   {%- else -%}
-    <div class="product-gallery__placeholder">
+    <div class="op-gallery__placeholder">
       {{ 'product-1' | placeholder_svg_tag }}
     </div>
   {%- endif -%}
 </div>
 
-<style>
-  .product-gallery {
-    position: relative;
-  }
-
-  .product-gallery__main {
-    position: relative;
-    width: 100%;
-    padding-bottom: 100%;
-    background-color: var(--color-bg-secondary);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    margin-bottom: var(--spacing-4);
-  }
-
-  .product-gallery__main-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    cursor: zoom-in;
-    transition: transform var(--transition-slow);
-  }
-
-  .product-gallery__main-image:hover {
-    transform: scale(1.05);
-  }
-
-  .product-gallery__thumbnails {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: var(--spacing-2);
-  }
-
-  .product-gallery__thumbnail {
-    position: relative;
-    width: 100%;
-    padding-bottom: 100%;
-    background-color: var(--color-bg-secondary);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    cursor: pointer;
-    transition: border-color var(--transition-base);
-  }
-
-  .product-gallery__thumbnail:hover {
-    border-color: var(--color-brand-primary);
-  }
-
-  .product-gallery__thumbnail.active {
-    border-color: var(--color-brand-primary);
-  }
-
-  .product-gallery__thumbnail img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .product-gallery__placeholder {
-    width: 100%;
-    padding-bottom: 100%;
-    background-color: var(--color-bg-secondary);
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .product-gallery__placeholder svg {
-    width: 50%;
-    height: 50%;
-    opacity: 0.3;
-  }
-</style>
 
 <script>
   // Product Gallery
@@ -126,9 +51,13 @@
     thumbnail.addEventListener('click', function() {
       const mainImage = document.querySelector('[data-main-image]');
       const newSrc = this.dataset.imageSrc;
+      const newSrcset = this.dataset.imageSrcset;
 
       // Update main image
       mainImage.src = newSrc;
+      if (newSrcset) {
+        mainImage.srcset = newSrcset;
+      }
 
       // Update active state
       document.querySelectorAll('[data-thumbnail]').forEach(t => t.classList.remove('active'));

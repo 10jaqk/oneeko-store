@@ -1,4 +1,4 @@
-<section class="featured-collection py-12">
+<section class="featured-collection py-16" style="background-color: var(--color-bg-secondary);">
   <div class="container">
     {%- if section.settings.title != blank -%}
       <div class="section-header text-center mb-4">
@@ -9,7 +9,7 @@
     {%- assign collection = collections[section.settings.collection] -%}
 
     {%- if collection != blank and collection.products.size > 0 -%}
-      <div class="product-grid grid grid-cols-2 md:grid-cols-4">
+      <div class="product-grid grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4">
         {%- for product in collection.products limit: section.settings.products_to_show -%}
           {%- render 'product-card', product: product -%}
         {%- endfor -%}
@@ -17,7 +17,7 @@
 
       {%- if section.settings.show_view_all -%}
         <div class="section-footer text-center mt-4">
-          <a href="{{ collection.url }}" class="btn btn-outline">
+          <a href="{{ collection.url }}" class="btn btn-secondary view-all-button">
             {{ section.settings.button_text }}
           </a>
         </div>
@@ -29,6 +29,41 @@
     {%- endif -%}
   </div>
 </section>
+
+<style>
+  .product-grid {
+    gap: var(--spacing-6);
+    align-items: stretch;
+  }
+
+  .product-grid > * {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 640px) {
+    .product-grid {
+      gap: var(--spacing-4);
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .product-grid {
+      gap: var(--spacing-5);
+    }
+  }
+
+  .section-footer {
+    margin-top: var(--spacing-8);
+  }
+
+  .view-all-button {
+    min-width: 200px;
+    padding: var(--spacing-4) var(--spacing-8);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+  }
+</style>
 
 {% schema %}
 {

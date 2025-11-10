@@ -40,32 +40,43 @@
     position: relative;
     display: flex;
     align-items: center;
-    max-width: 400px;
+    width: 100%;
   }
 
   .header-search__input {
     flex: 1;
     min-width: 0;
-    padding: var(--spacing-2) var(--spacing-10) var(--spacing-2) var(--spacing-4);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-full);
-    font-size: 14px;
-    transition: border-color var(--transition-base);
+    width: 100%;
+    padding: var(--spacing-4) 52px var(--spacing-4) var(--spacing-4);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: clamp(16px, 2.5vw, 18px);
+    font-family: var(--font-body);
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .header-search__input::placeholder {
+    color: var(--color-text-muted);
   }
 
   .header-search__input:focus {
     outline: none;
     border-color: var(--color-brand-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
   }
 
   .header-search__submit {
     position: absolute;
-    right: 4px;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     padding: 0;
     background: none;
     border: none;
@@ -239,20 +250,24 @@
   // Predictive Search
   class PredictiveSearch {
     constructor() {
-      this.searchContainer = document.querySelector('[data-header-search]');
-      if (!this.searchContainer) return;
+      try {
+        this.searchContainer = document.querySelector('[data-header-search]');
+        if (!this.searchContainer) return;
 
-      this.input = this.searchContainer.querySelector('[data-search-input]');
-      this.resultsPanel = this.searchContainer.querySelector('[data-predictive-search]');
-      this.resultsContainer = this.searchContainer.querySelector('[data-search-results]');
-      this.loadingIndicator = this.searchContainer.querySelector('[data-search-loading]');
-      this.footer = this.searchContainer.querySelector('[data-search-footer]');
-      this.viewAllLink = this.searchContainer.querySelector('[data-search-view-all]');
+        this.input = this.searchContainer.querySelector('[data-search-input]');
+        this.resultsPanel = this.searchContainer.querySelector('[data-predictive-search]');
+        this.resultsContainer = this.searchContainer.querySelector('[data-search-results]');
+        this.loadingIndicator = this.searchContainer.querySelector('[data-search-loading]');
+        this.footer = this.searchContainer.querySelector('[data-search-footer]');
+        this.viewAllLink = this.searchContainer.querySelector('[data-search-view-all]');
 
-      this.debounceTimer = null;
-      this.currentRequest = null;
+        this.debounceTimer = null;
+        this.currentRequest = null;
 
-      this.bindEvents();
+        this.bindEvents();
+      } catch (error) {
+        console.warn('Predictive search initialization failed:', error);
+      }
     }
 
     bindEvents() {

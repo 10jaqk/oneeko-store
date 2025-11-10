@@ -1,0 +1,16 @@
+{%- comment -%}
+  Collapsible SPECIFICATIONS.
+  Only renders if product.metafields.custom.specs_html exists and is not blank.
+  This snippet should only be called when the metafield has content.
+{%- endcomment -%}
+
+{%- assign specs_html = product.metafields.custom.specs_html -%}
+
+{%- if specs_html and specs_html != blank -%}
+<details class="op-collapse" data-acc="specs">
+  <summary class="op-collapse__summary">Specifications</summary>
+  <div class="op-collapse__panel rte">
+    {{ specs_html | metafield_text }}
+  </div>
+</details>
+{%- endif -%}

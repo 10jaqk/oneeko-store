@@ -1,5 +1,5 @@
-<section class="testimonials py-12">
-  <div class="container">
+<section class="testimonials py-16" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); background-image: url('{{ 'trust-testimonial-background.png' | asset_url }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+  <div class="container" style="padding: var(--spacing-12) 0;">
     {%- if section.settings.title != blank -%}
       <div class="section-header text-center mb-4">
         <h2 class="section-title">{{ section.settings.title }}</h2>
@@ -8,7 +8,7 @@
 
     <div class="testimonials__grid grid grid-cols-1 md:grid-cols-3">
       {%- for block in section.blocks -%}
-        <div class="testimonial card" {{ block.shopify_attributes }}>
+        <div class="testimonial" {{ block.shopify_attributes }}>
           <div class="testimonial__rating">
             {%- for i in (1..5) -%}
               <span class="testimonial__star">
@@ -34,12 +34,22 @@
 </section>
 
 <style>
+  .testimonials {
+    position: relative;
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%) !important;
+  }
+
   .testimonials__grid {
     gap: var(--spacing-6);
   }
 
   .testimonial {
     padding: var(--spacing-6);
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow-md);
   }
 
   .testimonial__rating {

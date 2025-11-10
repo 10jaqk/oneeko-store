@@ -1,0 +1,63 @@
+<a href="/" class="floating-home-button" aria-label="Return to Home">
+  <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+    <text x="50" y="28" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="20" font-weight="700" fill="currentColor">OneEko</text>
+  </svg>
+</a>
+
+<style>
+  .floating-home-button {
+    position: fixed;
+    top: 120px;
+    left: 20px;
+    z-index: 999;
+    background-color: var(--color-brand-primary);
+    color: white;
+    padding: 12px 20px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold);
+    font-size: 1.25rem;
+  }
+
+  .floating-home-button svg {
+    width: 100px;
+    height: 40px;
+  }
+
+  .floating-home-button:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+    background-color: var(--color-brand-dark);
+    color: white;
+  }
+
+  .floating-home-button:active {
+    transform: translateY(-1px);
+  }
+
+  /* Hide on mobile to avoid clutter */
+  @media (max-width: 767px) {
+    .floating-home-button {
+      display: none;
+    }
+  }
+
+  /* Adjust position on tablet */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .floating-home-button {
+      left: 10px;
+      padding: 10px 16px;
+    }
+
+    .floating-home-button svg {
+      width: 80px;
+      height: 32px;
+    }
+  }
+</style>

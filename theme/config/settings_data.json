@@ -1,0 +1,69 @@
+{
+  "current": {
+    "sections": {
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "payment-visa": {
+            "type": "payment_icon",
+            "settings": {
+              "icon_name": "visa"
+            }
+          },
+          "payment-mastercard": {
+            "type": "payment_icon",
+            "settings": {
+              "icon_name": "mastercard"
+            }
+          },
+          "payment-amex": {
+            "type": "payment_icon",
+            "settings": {
+              "icon_name": "american_express"
+            }
+          },
+          "payment-paypal": {
+            "type": "payment_icon",
+            "settings": {
+              "icon_name": "paypal"
+            }
+          },
+          "payment-shoppay": {
+            "type": "payment_icon",
+            "settings": {
+              "icon_name": "shopify_pay"
+            }
+          },
+          "payment-applepay": {
+            "type": "payment_icon",
+            "settings": {
+              "icon_name": "apple_pay"
+            }
+          },
+          "payment-googlepay": {
+            "type": "payment_icon",
+            "settings": {
+              "icon_name": "google_pay"
+            }
+          }
+        },
+        "block_order": [
+          "payment-visa",
+          "payment-mastercard",
+          "payment-amex",
+          "payment-paypal",
+          "payment-shoppay",
+          "payment-applepay",
+          "payment-googlepay"
+        ],
+        "settings": {
+          "column_1_heading": "About Us",
+          "column_1_text": "<p>Premium tech accessories for modern life.</p>",
+          "column_2_heading": "Quick Links",
+          "column_3_heading": "Customer Service",
+          "show_social": true
+        }
+      }
+    }
+  }
+}

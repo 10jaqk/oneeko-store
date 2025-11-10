@@ -7,14 +7,6 @@
           {{ collection.description }}
         </div>
       {%- endif -%}
-      <p class="collection-banner__count">
-        {{ collection.products_count }}
-        {%- if collection.products_count == 1 -%}
-          {{ 'collections.general.product' | t }}
-        {%- else -%}
-          {{ 'collections.general.products' | t }}
-        {%- endif -%}
-      </p>
     </div>
   </div>
 </section>

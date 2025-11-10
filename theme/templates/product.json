@@ -1,10 +1,21 @@
 {
   "sections": {
     "main": {
-      "type": "main-product"
+      "type": "main-product",
+      "settings": {
+        "enable_sticky_cta": true,
+        "show_vendor": true,
+        "show_sku": false,
+        "enable_zoom": true,
+        "gallery_layout": "thumbnails"
+      }
     },
     "product-recommendations": {
-      "type": "product-recommendations"
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You May Also Like",
+        "products_to_show": 4
+      }
     }
   },
   "order": [

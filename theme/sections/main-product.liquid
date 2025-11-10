@@ -1,13 +1,15 @@
-<section class="product-page py-12">
-  <div class="container">
-    <div class="product-page__grid">
+{%- render 'product-schema', product: product -%}
+
+<section class="oneeko-product">
+  <div class="op-container">
+    <div class="op-grid">
       <!-- Product Images -->
-      <div class="product-page__gallery">
+      <div class="op-media">
         {%- render 'product-gallery', product: product -%}
       </div>
 
-      <!-- Product Info -->
-      <div class="product-page__info">
+      <!-- Product Info / Buy Box (right column) -->
+      <aside class="op-buybox">
         <h1 class="product-page__title">{{ product.title }}</h1>
 
         {%- if product.vendor != blank and section.settings.show_vendor -%}
@@ -76,6 +78,8 @@
                 min="1"
                 class="quantity-input"
                 data-quantity-input
+                inputmode="numeric"
+                pattern="[0-9]*"
               >
               <button type="button" class="quantity-button quantity-plus" data-quantity-plus>
                 <span>+</span>
@@ -83,166 +87,516 @@
             </div>
           </div>
 
-          <!-- Add to Cart Button -->
+          <!-- Add to Cart Buttons (Amazon Style) -->
           <div class="product-form__buttons">
             <button
               type="submit"
               name="add"
-              class="btn btn-primary btn-full product-form__add-to-cart"
+              class="btn-amazon btn-amazon-cart"
               {% unless product.available %}disabled{% endunless %}
             >
               {%- if product.available -%}
-                {{ 'products.product.add_to_cart' | t }}
+                Add to Cart
               {%- else -%}
-                {{ 'products.product.sold_out' | t }}
+                Sold Out
               {%- endif -%}
             </button>
           </div>
         {% endform %}
 
-        <!-- Product Accordions -->
-        {%- render 'product-accordions', product: product, section: section -%}
+        <!-- Buy Now Button -->
+        {%- if product.available -%}
+          <div class="product-form__buy-now">
+            <button
+              type="button"
+              class="btn-amazon btn-amazon-buy"
+              onclick="window.location.href='/cart/add?id={{ product.selected_or_first_available_variant.id }}&quantity=1&return_to=/checkout'"
+            >
+              Buy Now
+            </button>
+          </div>
+        {%- endif -%}
+
+        <!-- BEGIN: extras that will be moved under gallery -->
+        <div id="op-buybox-extras">
+          <!-- About this item (Amazon Style) -->
+        <div class="product-page__about">
+          <h2 class="product-about__title">About this item</h2>
+
+          <ul class="product-about__features">
+            {%- if product.metafields.custom.feature_1 != blank -%}
+              <li>{{ product.metafields.custom.feature_1 }}</li>
+            {%- else -%}
+              <li><strong>High Quality:</strong> Premium materials and construction ensure long-lasting durability and reliable performance</li>
+            {%- endif -%}
+
+            {%- if product.metafields.custom.feature_2 != blank -%}
+              <li>{{ product.metafields.custom.feature_2 }}</li>
+            {%- else -%}
+              <li><strong>Easy to Use:</strong> Simple setup and intuitive operation make this product perfect for everyone</li>
+            {%- endif -%}
+
+            {%- if product.metafields.custom.feature_3 != blank -%}
+              <li>{{ product.metafields.custom.feature_3 }}</li>
+            {%- else -%}
+              <li><strong>Great Value:</strong> Excellent quality at an affordable price point with fast shipping</li>
+            {%- endif -%}
+
+            {%- if product.metafields.custom.feature_4 != blank -%}
+              <li>{{ product.metafields.custom.feature_4 }}</li>
+            {%- else -%}
+              <li><strong>Satisfaction Guaranteed:</strong> 30-day easy returns and excellent customer support</li>
+            {%- endif -%}
+
+            {%- if product.metafields.custom.feature_5 != blank -%}
+              <li>{{ product.metafields.custom.feature_5 }}</li>
+            {%- else -%}
+              <li><strong>Fast Shipping:</strong> Free shipping on orders over $50, delivered straight to your door</li>
+            {%- endif -%}
+          </ul>
+        </div>
+
+        <!-- Product Specifications -->
+        <div class="product-page__specifications">
+          <h2 class="product-specs__title">Product Information</h2>
+
+          <div class="product-specs__table" data-specifications-only>
+            {%- if product.metafields.custom.material != blank -%}
+              <div class="spec-row">
+                <div class="spec-label">Material</div>
+                <div class="spec-value">{{ product.metafields.custom.material }}</div>
+              </div>
+            {%- endif -%}
+
+            {%- if product.metafields.custom.dimensions != blank -%}
+              <div class="spec-row">
+                <div class="spec-label">Dimensions</div>
+                <div class="spec-value">{{ product.metafields.custom.dimensions }}</div>
+              </div>
+            {%- endif -%}
+
+            {%- if product.metafields.custom.weight != blank -%}
+              <div class="spec-row">
+                <div class="spec-label">Weight</div>
+                <div class="spec-value">{{ product.metafields.custom.weight }}</div>
+              </div>
+            {%- endif -%}
+
+            <div class="spec-row">
+              <div class="spec-label">Manufacturer</div>
+              <div class="spec-value">{{ product.vendor | default: "OneEko" }}</div>
+            </div>
+
+            {%- if product.variants.first.sku != blank -%}
+              <div class="spec-row">
+                <div class="spec-label">SKU</div>
+                <div class="spec-value">{{ product.variants.first.sku }}</div>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+          <!-- Panel Triggers (open wide inline expansions) -->
+          <div class="op-accordion-group">
+            <button class="op-panel-trigger" data-panel="details">Details</button>
+            <button class="op-panel-trigger" data-panel="shipping">Shipping &amp; Returns</button>
+            <button class="op-panel-trigger" data-panel="faq">FAQ</button>
+            {%- if product.metafields.custom.specs_html and product.metafields.custom.specs_html != blank -%}
+              <button class="op-panel-trigger" data-panel="specs">Specifications</button>
+            {%- endif -%}
+          </div>
+        </div>
+        <!-- END: extras -->
+      </aside>
+    </div>
+
+    <!-- Target where the extras will be reinserted (full-width) -->
+    <section id="op-extras-target" class="op-extras-wide" aria-live="polite"></section>
+
+    <!-- Wide inline expansion host (hidden by default) -->
+    <section id="op-wide" class="op-wide" aria-hidden="true">
+      <div class="op-wide__inner">
+        <button type="button" class="op-wide__close" data-wide-close aria-label="Close">×</button>
+        <div class="op-wide__content" data-wide-content></div>
       </div>
+    </section>
+
+    <!-- Hidden content sources -->
+    <div id="op-panel-src" class="op-panel-src" hidden>
+      <section data-src="details" class="rte">
+        <h2>Details</h2>
+        <div class="op-details rte op-details--clamped" data-details>
+          {{ product.description }}
+        </div>
+        <button type="button" class="op-readmore" data-readmore hidden>Show more</button>
+      </section>
+
+      <section data-src="shipping" class="rte">
+        <h2>Shipping &amp; Returns</h2>
+        <div class="shipping-info">
+          <div class="shipping-info__item">
+            <strong>Free Shipping</strong>
+            <p>On all orders over $50. Standard delivery in 3-5 business days.</p>
+          </div>
+          <div class="shipping-info__item">
+            <strong>30-Day Returns</strong>
+            <p>Not satisfied? Return within 30 days for a full refund. No questions asked.</p>
+          </div>
+        </div>
+      </section>
+
+      <section data-src="faq" class="rte">
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <strong>How long does shipping take?</strong>
+            <p>Standard shipping takes 3-5 business days. Express shipping (1-2 days) is available at checkout.</p>
+          </div>
+          <div class="faq-item">
+            <strong>What's your warranty policy?</strong>
+            <p>All products come with a 1-year manufacturer warranty covering defects in materials and workmanship.</p>
+          </div>
+          <div class="faq-item">
+            <strong>Do you ship internationally?</strong>
+            <p>Yes! We ship worldwide. International shipping times vary by location (7-14 business days).</p>
+          </div>
+        </div>
+      </section>
+
+      {%- if product.metafields.custom.specs_html and product.metafields.custom.specs_html != blank -%}
+      <section data-src="specs" class="rte">
+        <h2>Specifications</h2>
+        {{ product.metafields.custom.specs_html | metafield_text }}
+      </section>
+      {%- endif -%}
     </div>
   </div>
 </section>
 
-<!-- Mobile Sticky Add to Cart -->
-{%- render 'sticky-add-to-cart', product: product -%}
+<!-- Mobile Sticky Add to Cart Bar -->
+<aside class="mobile-atc-bar" data-mobile-atc>
+  <div class="mobile-atc-bar__price">
+    {{ product.price | money }}
+  </div>
+  <button
+    type="button"
+    class="mobile-atc-bar__btn"
+    data-mobile-atc-btn
+    {% unless product.available %}disabled{% endunless %}
+  >
+    {%- if product.available -%}
+      Add to Cart
+    {%- else -%}
+      Sold Out
+    {%- endif -%}
+  </button>
+</aside>
 
 <style>
+  /* Product Page Wrapper - Constrain Width */
+  .product-page {
+    background-color: #ffffff;
+    padding: 8px 12px;
+  }
+
+  .product-page__wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
   .product-page__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--spacing-8);
+    gap: 12px;
   }
 
   @media (min-width: 768px) {
     .product-page__grid {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-12);
+      grid-template-columns: 1.8fr 1fr;
+      gap: 24px;
     }
   }
 
+  /* Product Info Card - No background, no borders */
+  .product-page__info {
+    background-color: transparent;
+    padding: 0;
+  }
+
+  /* Product Gallery Card - No background, no borders */
+  .product-page__gallery {
+    background-color: transparent;
+    padding: 0;
+  }
+
   .product-page__title {
-    font-size: var(--font-size-3xl);
-    margin-bottom: var(--spacing-3);
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 4px;
+    line-height: 1.2;
+    color: #0F1111;
   }
 
   .product-page__vendor {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-    margin-bottom: var(--spacing-4);
+    font-size: 12px;
+    color: #007185;
+    margin-bottom: 2px;
   }
 
   .product-page__price-wrapper {
-    margin-bottom: var(--spacing-6);
+    margin-bottom: 8px;
   }
 
   .product-page__price {
     display: flex;
-    align-items: center;
-    gap: var(--spacing-3);
+    align-items: baseline;
+    gap: 6px;
     flex-wrap: wrap;
   }
 
   .product-page__price-regular,
   .product-page__price-sale {
-    font-size: var(--font-size-3xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text-primary);
+    font-size: 20px;
+    font-weight: 400;
+    color: #0F1111;
   }
 
   .product-page__price-sale {
-    color: var(--color-cta-red);
+    color: #B12704;
   }
 
   .product-page__price-compare {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-muted);
+    font-size: 12px;
+    color: #565959;
     text-decoration: line-through;
   }
 
   .product-page__price-badge {
-    padding: var(--spacing-1) var(--spacing-3);
-    background-color: var(--color-cta-orange);
+    padding: 1px 6px;
+    background-color: #CC0C39;
     color: white;
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-bold);
-    border-radius: var(--radius-full);
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 2px;
   }
 
   .product-form {
-    margin-bottom: var(--spacing-6);
+    margin-bottom: 8px;
   }
 
   .product-form__option {
-    margin-bottom: var(--spacing-4);
+    margin-bottom: 8px;
   }
 
   .product-form__option label {
     display: block;
-    margin-bottom: var(--spacing-2);
-    font-weight: var(--font-weight-medium);
+    margin-bottom: 2px;
+    font-weight: 700;
+    font-size: 12px;
+    color: #0F1111;
   }
 
   .product-form__select {
     width: 100%;
+    font-size: 13px;
+    padding: 4px 6px;
+    border: 1px solid #D5D9D9;
+    border-radius: 8px;
+    background-color: #F0F2F2;
   }
 
   .product-form__quantity {
-    margin-bottom: var(--spacing-6);
+    margin-bottom: 8px;
   }
 
   .product-form__quantity label {
     display: block;
-    margin-bottom: var(--spacing-2);
-    font-weight: var(--font-weight-medium);
+    margin-bottom: 2px;
+    font-weight: 700;
+    font-size: 12px;
+    color: #0F1111;
   }
 
   .quantity-selector {
     display: flex;
     align-items: center;
-    gap: var(--spacing-2);
-    max-width: 150px;
+    gap: 3px;
+    max-width: 110px;
   }
 
   .quantity-button {
-    width: 40px;
-    height: 48px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    background-color: #F0F2F2;
+    border: 1px solid #D5D9D9;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: var(--font-size-xl);
-    transition: background-color var(--transition-base);
+    font-size: 14px;
+    transition: background-color 0.15s;
   }
 
   .quantity-button:hover {
-    background-color: var(--color-bg-tertiary);
+    background-color: #E3E6E6;
   }
 
   .quantity-input {
     flex: 1;
     text-align: center;
-    font-weight: var(--font-weight-medium);
+    font-weight: 400;
+    font-size: 13px;
+    padding: 4px;
+    border: 1px solid #D5D9D9;
+    border-radius: 8px;
+    background-color: #F0F2F2;
   }
 
   .product-form__buttons {
-    margin-bottom: var(--spacing-6);
+    margin-bottom: 8px;
   }
 
+  .product-form__buy-now {
+    margin-bottom: 12px;
+  }
+
+  /* Amazon-Style Buttons */
+  .btn-amazon {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 400;
+    border: 1px solid;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .btn-amazon-cart {
+    background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+    border-color: #a88734 #9c7e31 #846a29;
+    color: #111;
+  }
+
+  .btn-amazon-cart:hover {
+    background: linear-gradient(to bottom, #f5d78e, #edb932);
+  }
+
+  .btn-amazon-buy {
+    background: linear-gradient(to bottom, #f3a847, #f08804);
+    border-color: #e47911;
+    color: #111;
+  }
+
+  .btn-amazon-buy:hover {
+    background: linear-gradient(to bottom, #f2a03e, #f18904);
+  }
+
+  /* Amazon-Style About Section */
+  .product-page__about {
+    padding-top: 12px;
+    border-top: 1px solid #D5D9D9;
+    margin-bottom: 12px;
+  }
+
+  .product-about__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0F1111;
+    margin-bottom: 6px;
+  }
+
+  .product-about__features {
+    list-style: disc;
+    padding-left: 18px;
+    margin: 0;
+  }
+
+  .product-about__features li {
+    margin-bottom: 6px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #0F1111;
+  }
+
+  /* Product Description */
   .product-page__description {
-    padding-top: var(--spacing-6);
-    border-top: 1px solid var(--color-border);
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-top: 1px solid #D5D9D9;
+    margin-bottom: 0;
   }
 
+  .product-page__description p {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #0F1111;
+    margin-bottom: 10px;
+  }
+
+  /* Amazon-Style Specifications Table */
+  .product-page__specifications {
+    padding-top: 12px;
+    border-top: 1px solid #D5D9D9;
+    margin-bottom: 12px;
+  }
+
+  .product-specs__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0F1111;
+    margin-bottom: 8px;
+  }
+
+  .product-specs__table {
+    background-color: #ffffff;
+  }
+
+  .spec-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid #E7E7E7;
+    font-size: 13px;
+  }
+
+  .spec-row:first-child {
+    padding-top: 0;
+  }
+
+  .spec-row:last-child {
+    border-bottom: none;
+  }
+
+  .spec-label {
+    font-weight: 700;
+    color: #0F1111;
+  }
+
+  .spec-value {
+    color: #0F1111;
+  }
+
+  /* Hide images in About, Specifications, and Description sections */
+  .product-page__about img,
+  .product-page__specifications img,
+  .product-page__description img {
+    display: none !important;
+  }
+
+  /* Hide duplicate headings in description that match our sections */
+  .product-page__description h2,
   .product-page__description h3 {
-    font-size: var(--font-size-xl);
-    margin-bottom: var(--spacing-4);
+    display: none;
+  }
+
+  /* Hide "SPECIFICATIONS" text and similar headings from description */
+  .product-page__description strong:only-child {
+    display: none;
   }
 </style>
 
@@ -263,6 +617,34 @@
       const input = button.parentElement.querySelector('[data-quantity-input]');
       const currentValue = parseInt(input.value) || 1;
       input.value = currentValue + 1;
+    });
+  });
+
+  // Remove all images from description, about, and specifications
+  document.addEventListener('DOMContentLoaded', () => {
+    const aboutSection = document.querySelector('.product-page__about');
+    if (aboutSection) {
+      aboutSection.querySelectorAll('img').forEach(img => img.remove());
+    }
+
+    const specificationsSection = document.querySelector('.product-page__specifications');
+    if (specificationsSection) {
+      specificationsSection.querySelectorAll('img').forEach(img => img.remove());
+    }
+
+    const description = document.querySelector('.product-page__description');
+    if (description) {
+      description.querySelectorAll('img').forEach(img => img.remove());
+    }
+  });
+
+  // Remove inline heights that force tall/narrow frames
+  document.addEventListener('DOMContentLoaded', function () {
+    var root = document.querySelector('.op-gallery--stacked');
+    if (!root) return;
+    root.querySelectorAll('[style*="height"], [style*="min-height"]').forEach(function(el){
+      el.style.height = '';
+      el.style.minHeight = '';
     });
   });
 </script>

@@ -47,48 +47,90 @@ class HeaderScroll {
  */
 class SearchModal {
   constructor() {
-    this.modal = document.querySelector('[data-search-modal]');
-    this.toggleButtons = document.querySelectorAll('[data-search-toggle]');
-    this.closeButtons = document.querySelectorAll('[data-search-close]');
+    try {
+      this.modal = document.querySelector('[data-search-modal]');
+      this.toggleButtons = document.querySelectorAll('[data-search-toggle]');
+      this.closeButtons = document.querySelectorAll('[data-search-close]');
 
-    if (!this.modal) return;
+      if (!this.modal) {
+        console.warn('Search modal not found');
+        return;
+      }
 
-    this.bindEvents();
+      if (this.toggleButtons.length === 0) {
+        console.warn('Search toggle buttons not found');
+        return;
+      }
+
+      console.log('SearchModal initialized', {
+        modal: this.modal,
+        toggleButtons: this.toggleButtons.length,
+        closeButtons: this.closeButtons.length
+      });
+
+      this.bindEvents();
+    } catch (error) {
+      console.error('SearchModal constructor error:', error);
+    }
   }
 
   bindEvents() {
-    // Open modal
-    this.toggleButtons.forEach(btn => {
-      btn.addEventListener('click', () => this.open());
-    });
+    try {
+      // Open modal
+      this.toggleButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('Search button clicked');
+          this.open();
+        });
+      });
 
-    // Close modal
-    this.closeButtons.forEach(btn => {
-      btn.addEventListener('click', () => this.close());
-    });
+      // Close modal
+      this.closeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.close();
+        });
+      });
 
-    // Close on escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.modal.classList.contains('active')) {
-        this.close();
-      }
-    });
+      // Close on escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.modal.classList.contains('active')) {
+          this.close();
+        }
+      });
+    } catch (error) {
+      console.error('SearchModal bindEvents error:', error);
+    }
   }
 
   open() {
-    this.modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    try {
+      console.log('Opening search modal');
+      this.modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
 
-    // Focus search input
-    setTimeout(() => {
-      const input = this.modal.querySelector('[data-search-input]');
-      if (input) input.focus();
-    }, 100);
+      // Focus search input
+      setTimeout(() => {
+        const input = this.modal.querySelector('[data-search-input]');
+        if (input) {
+          input.focus();
+          console.log('Search input focused');
+        }
+      }, 100);
+    } catch (error) {
+      console.error('SearchModal open error:', error);
+    }
   }
 
   close() {
-    this.modal.classList.remove('active');
-    document.body.style.overflow = '';
+    try {
+      console.log('Closing search modal');
+      this.modal.classList.remove('active');
+      document.body.style.overflow = '';
+    } catch (error) {
+      console.error('SearchModal close error:', error);
+    }
   }
 }
 

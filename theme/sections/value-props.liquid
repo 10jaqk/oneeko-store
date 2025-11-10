@@ -1,5 +1,9 @@
-<section class="value-props py-12" style="background-color: var(--color-bg-secondary);">
+<section class="value-props py-16" style="background-color: var(--color-bg-secondary);">
   <div class="container">
+    <div style="text-align: center; margin-bottom: var(--spacing-8);">
+      <img src="{{ 'benefits.png' | asset_url }}" alt="Our Benefits" style="max-width: 320px; width: 100%; height: auto; display: inline-block;">
+    </div>
+
     <div class="value-props__grid grid grid-cols-1 md:grid-cols-3">
       {%- for block in section.blocks -%}
         <div class="value-prop" {{ block.shopify_attributes }}>
