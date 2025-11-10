@@ -1,69 +1,126 @@
 {
   "current": {
     "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo_width": 120,
+          "menu": "main-menu",
+          "show_search": true,
+          "enable_sticky": true
+        }
+      },
       "footer": {
         "type": "footer",
         "blocks": {
-          "payment-visa": {
+          "payment_visa": {
             "type": "payment_icon",
             "settings": {
               "icon_name": "visa"
             }
           },
-          "payment-mastercard": {
+          "payment_mastercard": {
             "type": "payment_icon",
             "settings": {
               "icon_name": "mastercard"
             }
           },
-          "payment-amex": {
+          "payment_amex": {
             "type": "payment_icon",
             "settings": {
               "icon_name": "american_express"
             }
           },
-          "payment-paypal": {
+          "payment_paypal": {
             "type": "payment_icon",
             "settings": {
               "icon_name": "paypal"
             }
           },
-          "payment-shoppay": {
+          "payment_shopify": {
             "type": "payment_icon",
             "settings": {
               "icon_name": "shopify_pay"
             }
           },
-          "payment-applepay": {
+          "payment_apple": {
             "type": "payment_icon",
             "settings": {
               "icon_name": "apple_pay"
             }
           },
-          "payment-googlepay": {
+          "payment_google": {
             "type": "payment_icon",
             "settings": {
               "icon_name": "google_pay"
             }
+          },
+          "security_ssl": {
+            "type": "security_badge",
+            "settings": {
+              "badge_type": "ssl_secure",
+              "badge_title": "100% Secure",
+              "badge_subtitle": "SSL Encrypted"
+            }
+          },
+          "security_moneyback": {
+            "type": "security_badge",
+            "settings": {
+              "badge_type": "money_back",
+              "badge_title": "30-Day Returns",
+              "badge_subtitle": "Money Back Guarantee"
+            }
+          },
+          "security_shipping": {
+            "type": "security_badge",
+            "settings": {
+              "badge_type": "free_shipping",
+              "badge_title": "Free Shipping",
+              "badge_subtitle": "On Orders $50+"
+            }
+          },
+          "security_checkout": {
+            "type": "security_badge",
+            "settings": {
+              "badge_type": "secure_checkout",
+              "badge_title": "Secure Checkout",
+              "badge_subtitle": "Protected Payment"
+            }
           }
         },
         "block_order": [
-          "payment-visa",
-          "payment-mastercard",
-          "payment-amex",
-          "payment-paypal",
-          "payment-shoppay",
-          "payment-applepay",
-          "payment-googlepay"
+          "payment_visa",
+          "payment_mastercard",
+          "payment_amex",
+          "payment_paypal",
+          "payment_shopify",
+          "payment_apple",
+          "payment_google",
+          "security_ssl",
+          "security_moneyback",
+          "security_shipping",
+          "security_checkout"
         ],
         "settings": {
-          "column_1_heading": "About Us",
-          "column_1_text": "<p>Premium tech accessories for modern life.</p>",
-          "column_2_heading": "Quick Links",
-          "column_3_heading": "Customer Service",
-          "show_social": true
+          "column_1_heading": "About OneEko",
+          "column_1_text": "<p>Premium tech accessories for modern life. Quality products, fast shipping, and exceptional customer service.</p>",
+          "column_2_heading": "Shop",
+          "menu_column_2": "footer",
+          "column_3_heading": "Support",
+          "menu_column_3": "footer",
+          "show_social": true,
+          "legal_menu": "footer"
+        }
+      },
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "text": "Free shipping on orders over $50! 🚚",
+          "link": "/collections/all",
+          "show_close": true
         }
       }
-    }
+    },
+    "content_for_index": []
   }
 }
