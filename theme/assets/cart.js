@@ -12,6 +12,7 @@ class CartManager {
     this.setupAddToCart();
     this.setupCartUpdates();
     this.setupQuantityButtons();
+    this.setupVariantSelectors();
   }
 
   /**
@@ -44,13 +45,45 @@ class CartManager {
     try {
       const formData = new FormData(form);
 
+      // Get variant ID from form or product page
+      let variantId = formData.get('id');
+
+      // If no ID in form, try to get from product data
+      if (!variantId) {
+        const productData = form.closest('[data-product-id]');
+        if (productData) {
+          variantId = productData.dataset.variantId || productData.dataset.productId;
+        }
+      }
+
+      // If still no variant ID, get from meta or hidden input
+      if (!variantId) {
+        const variantInput = form.querySelector('input[name="id"], select[name="id"]');
+        if (variantInput) {
+          variantId = variantInput.value;
+        }
+      }
+
+      // Prepare data for Shopify Cart API
+      const cartData = {
+        items: [{
+          id: variantId || formData.get('id'),
+          quantity: parseInt(formData.get('quantity') || 1)
+        }]
+      };
+
       const response = await fetch('/cart/add.js', {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cartData)
       });
 
       if (!response.ok) {
-        throw new Error('Failed to add to cart');
+        const errorData = await response.json();
+        console.error('Cart API error:', errorData);
+        throw new Error(errorData.description || 'Failed to add to cart');
       }
 
       const item = await response.json();
@@ -216,6 +249,50 @@ class CartManager {
           input.dispatchEvent(new Event('change'));
         }
       });
+    });
+  }
+
+  /**
+   * Setup variant selectors to update hidden ID field
+   */
+  setupVariantSelectors() {
+    const productForms = document.querySelectorAll('form[action*="/cart/add"]');
+
+    productForms.forEach(form => {
+      const variantSelects = form.querySelectorAll('.product-form__select');
+      const hiddenIdInput = form.querySelector('input[name="id"]');
+
+      if (variantSelects.length > 0 && hiddenIdInput) {
+        // Get product data from form or page
+        const productDataElement = form.closest('[data-product]') || document.querySelector('[data-product]');
+
+        if (productDataElement) {
+          try {
+            const productData = JSON.parse(productDataElement.dataset.product || productDataElement.textContent);
+
+            // Listen to variant selection changes
+            variantSelects.forEach(select => {
+              select.addEventListener('change', () => {
+                const selectedOptions = Array.from(variantSelects).map(s => s.value);
+
+                // Find matching variant
+                const matchingVariant = productData.variants.find(variant => {
+                  return selectedOptions.every((option, index) => {
+                    return variant.options[index] === option;
+                  });
+                });
+
+                if (matchingVariant) {
+                  hiddenIdInput.value = matchingVariant.id;
+                }
+              });
+            });
+          } catch (e) {
+            // If product data not available, variant ID will use default
+            console.log('Product data not available for variant selection');
+          }
+        }
+      }
     });
   }
 }

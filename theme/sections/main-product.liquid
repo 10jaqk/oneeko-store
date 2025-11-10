@@ -44,6 +44,8 @@
 
         <!-- Product Form -->
         {% form 'product', product, id: 'product-form', class: 'product-form' %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
           {%- unless product.has_only_default_variant -%}
             <div class="product-form__variants">
               {%- for option in product.options_with_values -%}
