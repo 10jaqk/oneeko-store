@@ -1,12 +1,3 @@
-{%- comment -%}
-  Free Shipping Progress Bar
-  Shows progress toward free shipping threshold ($50)
-  Slimmer, cleaner design for cart drawer and cart page
-
-  Usage:
-  {%- render 'free-shipping-bar' -%}
-{%- endcomment -%}
-
 {%- liquid
   assign free_shipping_threshold = 5000
   assign cart_total = cart.total_price
@@ -18,130 +9,18 @@
   endif
 -%}
 
-<div class="free-shipping-bar" data-free-shipping-bar>
+<div class="free-shipping-bar">
   {%- if remaining > 0 -%}
     <p class="free-shipping-bar__message">
-      <svg class="free-shipping-bar__icon" width="16" height="16" viewBox="0 0 20 20" fill="none">
-        <path d="M1 3h14v10H1V3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M15 6h3l2 2v5h-5V6z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="5" cy="15.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
-        <circle cx="16" cy="15.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
-      </svg>
-      <span>Add <strong>{{ remaining | money }}</strong> for <strong>FREE SHIPPING</strong></span>
+      Add <strong>{{ remaining | money }}</strong> more for FREE shipping
     </p>
   {%- else -%}
-    <p class="free-shipping-bar__message free-shipping-bar__message--success">
-      <svg class="free-shipping-bar__icon" width="16" height="16" viewBox="0 0 20 20" fill="none">
-        <path d="M7 10l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <span><strong>You've unlocked FREE SHIPPING!</strong></span>
+    <p class="free-shipping-bar__message">
+      <strong>You've unlocked FREE SHIPPING!</strong>
     </p>
   {%- endif -%}
 
   <div class="free-shipping-bar__progress">
-    <div class="free-shipping-bar__progress-fill" style="width: {{ percentage }}%" data-progress="{{ percentage }}"></div>
+    <div class="free-shipping-bar__bar" style="width: {{ percentage }}%;"></div>
   </div>
 </div>
-
-<style>
-  .free-shipping-bar {
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-    border: 1px solid #bae6fd;
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 16px;
-  }
-
-  .free-shipping-bar__message {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: #0369a1;
-    margin: 0 0 8px 0;
-    text-align: left;
-  }
-
-  .free-shipping-bar__message--success {
-    color: #16a34a;
-  }
-
-  .free-shipping-bar__icon {
-    flex-shrink: 0;
-  }
-
-  .free-shipping-bar__message span {
-    line-height: 1.4;
-  }
-
-  .free-shipping-bar__message strong {
-    font-weight: 700;
-  }
-
-  .free-shipping-bar__progress {
-    width: 100%;
-    height: 6px;
-    background-color: #e0f2fe;
-    border-radius: 3px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .free-shipping-bar__progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #2563eb 0%, #10b981 100%);
-    border-radius: 3px;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-  }
-
-  .free-shipping-bar__progress-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
-    animation: shimmer 2s infinite;
-  }
-
-  @keyframes shimmer {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
-  /* Success state - green background */
-  .free-shipping-bar:has(.free-shipping-bar__message--success) {
-    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-    border-color: #bbf7d0;
-  }
-
-  .free-shipping-bar:has(.free-shipping-bar__message--success) .free-shipping-bar__progress {
-    background-color: #dcfce7;
-  }
-
-  .free-shipping-bar:has(.free-shipping-bar__message--success) .free-shipping-bar__progress-fill {
-    background: linear-gradient(90deg, #10b981 0%, #059669 100%);
-  }
-
-  @media (max-width: 767px) {
-    .free-shipping-bar {
-      padding: 10px 12px;
-    }
-
-    .free-shipping-bar__message {
-      font-size: 12px;
-      gap: 6px;
-    }
-
-    .free-shipping-bar__icon {
-      width: 14px;
-      height: 14px;
-    }
-  }
-</style>
