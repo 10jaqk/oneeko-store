@@ -58,4 +58,21 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Ensure thumbnail row is swipeable (no JS required, CSS handles overflow).
+
+  // Show/hide sticky CTA bar based on scroll
+  const stickyCtaBar = document.querySelector('.sticky-cta');
+  if (stickyCtaBar) {
+    const threshold = 300;
+    const toggleSticky = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollTop > threshold) {
+        stickyCtaBar.classList.add('active');
+      } else {
+        stickyCtaBar.classList.remove('active');
+      }
+    };
+    // Initial state
+    toggleSticky();
+    window.addEventListener('scroll', toggleSticky);
+  }
 });

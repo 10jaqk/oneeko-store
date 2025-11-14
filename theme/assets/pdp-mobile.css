@@ -134,3 +134,14 @@
     object-fit: contain !important;
   }
 }
+
+/* ===== Sticky CTA hide/show transitions ===== */
+@media (max-width: 768px){
+  .sticky-cta {
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  .sticky-cta.active {
+    transform: translateY(0);
+  }
+}
