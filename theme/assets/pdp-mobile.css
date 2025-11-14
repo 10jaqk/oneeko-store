@@ -1,0 +1,136 @@
+/* ===== PDP Mobile Optimization ===== */
+@media (max-width: 768px){
+  .pdp { padding: 8px 12px 88px; max-width: 100vw; overflow-x: hidden; }
+
+  /* Header / top spacing */
+  .pdp .page-width, .pdp .product__info-wrapper, .pdp .product__title-wrapper { padding: 0 !important; }
+
+  /* Title sizing with clamp */
+  .product__title { font-size: clamp(18px, 3.6vw, 22px); line-height: 1.25; margin: 10px 0 6px; }
+  .product__vendor { font-size: 13px; opacity: .8; }
+
+  /* Price / badges tighter */
+  .price { font-size: clamp(18px, 4.2vw, 22px); }
+  .product__badges, .product__meta { margin: 6px 0 !important; }
+
+  /* Gallery viewport-fit */
+  .product-media-wrapper, .product__media, .product__media img {
+    width: 100% !important;
+  }
+  .product__media img{
+    max-height: calc(100vh - 180px); /* header + safe area */
+    object-fit: contain;
+    border-radius: 12px;
+    background: #fff;
+  }
+
+  /* Thumbnails: horizontal swipe */
+  .product-thumbnails, .thumbnail-list, .media-thumbnails {
+    display: flex; gap: 8px; padding: 8px 0 10px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  .product-thumbnails::-webkit-scrollbar{ display: none; }
+  .thumbnail-item, .thumbnail { flex: 0 0 auto; width: 72px; height: 72px; border-radius: 10px; overflow: hidden; }
+
+  /* Forms: big tap targets */
+  .product-form__input select,
+  .product-form__input .select,
+  .product-form__quantity,
+  .product-form__buttons .button { min-height: 48px; }
+
+  /* Collapse long content by default */
+  .pdp .collapsible-content { border-radius: 10px; overflow: hidden; }
+
+  /* Sticky CTA bar */
+  .sticky-cta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+    backdrop-filter: blur(6px); background: rgba(255,255,255,.92);
+    border-top: 1px solid #eee; padding: 10px 12px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 10px;
+  }
+  .sticky-cta__price { align-self: center; font-weight: 800; font-size: 16px; text-align: left; }
+  .sticky-cta__btn { min-height: 48px; border-radius: 12px; font-weight: 800; }
+  .sticky-cta__btn--cart { background:#111; color:#fff; }
+  .sticky-cta__btn--buy  { background:#d46b08; color:#fff; }
+}
+
+/* Safe focus + accessibility */
+.sticky-cta__btn:focus { outline: 2px solid #d46b08; outline-offset: 2px; }
+
+/* ==== ENHANCED MOBILE HERO CONTAIN FIX ==== */
+@media (max-width: 768px){
+  /* KILL THE 4:3 ASPECT RATIO CONTAINER - THIS IS THE MAIN CULPRIT */
+  .pdp .op-gallery--stacked .pg-main,
+  .pdp .op-gallery--stacked .op-gallery__main,
+  .op-gallery--stacked .pg-main,
+  .op-gallery--stacked .op-gallery__main {
+    aspect-ratio: auto !important;
+    height: auto !important;
+    max-height: calc(100vh - 180px) !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  /* KILL THE 100% HEIGHT ON IMAGES - LET THEM BE AUTO */
+  .pdp .op-gallery--stacked .pg-main img,
+  .pdp .op-gallery--stacked .op-gallery__main img,
+  .pdp .op-gallery--stacked .pg-main picture > img,
+  .op-gallery--stacked .pg-main img,
+  .op-gallery--stacked .op-gallery__main img,
+  .op-gallery--stacked .pg-main picture > img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: calc(100vh - 180px) !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    position: static !important;
+  }
+
+  /* Kill ALL ratio/padding wrapper tricks */
+  .pdp .media,
+  .pdp .product__media,
+  .pdp .product-media,
+  .pdp .product-media-container,
+  .pdp .product__media-item,
+  .pdp .ratio,
+  .pdp .media--adapt,
+  .pdp .product-media-wrapper {
+    padding: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    position: relative !important;
+  }
+
+  /* Kill pseudo-element padding hacks completely */
+  .pdp .ratio::before,
+  .pdp .media::before,
+  .pdp .product-media-wrapper::before {
+    content: none !important;
+    display: none !important;
+  }
+
+  /* Force ALL product images to static positioning + contain */
+  .pdp .media > img,
+  .pdp .product__media img,
+  .pdp .product-media img,
+  .pdp .product__modal-opener img,
+  .pdp .product-media-wrapper img,
+  .pdp img[src*="product"] {
+    position: static !important;
+    inset: auto !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: calc(100vh - 180px) !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+
+  /* Override ANY global cover utilities */
+  .pdp img[style*="object-fit: cover"],
+  .pdp img[style*="object-fit:cover"],
+  .pdp .object-cover,
+  .pdp .media--cropped img {
+    object-fit: contain !important;
+  }
+}

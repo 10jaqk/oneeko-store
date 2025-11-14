@@ -34,6 +34,9 @@
   {%- if template.name == 'product' -%}
     {{ 'oneeko-product.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
+  {%- if template.name == 'collection' or template.name == 'search' or template.name == 'index' -%}
+    {{ 'collection-cards.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
 
   <!-- JavaScript Assets -->
   <script src="{{ 'global.js' | asset_url }}" defer></script>
@@ -41,6 +44,10 @@
   <script src="{{ 'cart.js' | asset_url }}" defer></script>
   {%- if template.name == 'product' -%}
     <script src="{{ 'oneeko-product.js' | asset_url }}" defer></script>
+    <script src="{{ 'pdp-mobile.js' | asset_url }}" defer></script>
+  {%- endif -%}
+  {%- if template.name == 'collection' or template.name == 'search' or template.name == 'index' -%}
+    <script src="{{ 'collection-cards.js' | asset_url }}" defer></script>
   {%- endif -%}
 
   {{ content_for_header }}

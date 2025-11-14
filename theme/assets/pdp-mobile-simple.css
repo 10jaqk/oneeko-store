@@ -1,0 +1,45 @@
+/* ==== SIMPLE MOBILE FIX ==== */
+@media (max-width: 768px){
+  /* Make gallery container smaller and centered */
+  .op-gallery,
+  .op-gallery--stacked {
+    max-width: 85%;
+    margin: 0 auto;
+  }
+  
+  /* Keep images contained and centered */
+  .op-gallery--stacked .pg-main,
+  .op-gallery--stacked .op-gallery__main {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .op-gallery--stacked .pg-main img,
+  .op-gallery--stacked .op-gallery__main img,
+  .pg-main-image {
+    max-width: 100%;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* Fix any container padding pushing content right */
+  .pdp,
+  .oneeko-product {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  
+  .op-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0 auto;
+  }
+  
+  /* Center product description too */
+  .op-buybox {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

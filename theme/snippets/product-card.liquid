@@ -1,50 +1,35 @@
-<div class="product-card" data-price="{{ product.price }}" data-available="{{ product.available }}">
-  <a href="{{ product.url }}" class="product-card__link">
-    <div class="product-card__image-wrapper">
-      {%- if product.featured_image -%}
-        <img
-          src="{{ product.featured_image | image_url: width: 400, format: 'pjpg' }}"
-          srcset="{{ product.featured_image | image_url: width: 200, format: 'pjpg' }} 200w,
-                  {{ product.featured_image | image_url: width: 400, format: 'pjpg' }} 400w,
-                  {{ product.featured_image | image_url: width: 600, format: 'pjpg' }} 600w,
-                  {{ product.featured_image | image_url: width: 800, format: 'pjpg' }} 800w"
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          alt="{{ product.featured_image.alt | default: product.title | escape }}"
-          width="{{ product.featured_image.width }}"
-          height="{{ product.featured_image.height }}"
-          loading="lazy"
-          class="product-card__image"
-        >
+{%- assign av = product.selected_or_first_available_variant -%}
+<div class="pcard" data-handle="{{ product.handle }}">
+  
+  {%- comment -%} Media wrapper for overlay positioning {%- endcomment -%}
+  <div class="pcard__media-wrapper">
+    <a class="pcard__media" href="{{ product.url }}" aria-label="{{ product.title }}">
+      {{ product.featured_image | image_url: width: 680 | image_tag: loading: 'lazy', class: 'pcard__img', alt: product.title }}
+    </a>
+    
+    {%- comment -%} Actions overlay on desktop, static on mobile {%- endcomment -%}
+    <div class="pcard__actions" aria-hidden="false">
+      {%- if av and av.available -%}
+        <form class="pcard__form" method="post" action="/cart/add">
+          <input type="hidden" name="id" value="{{ av.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="pcard__btn pcard__btn--add" data-quick-add data-variant="{{ av.id }}">
+            Add to Cart
+          </button>
+          <button type="button" class="pcard__btn pcard__btn--buy" data-quick-buy data-variant="{{ av.id }}">
+            Buy Now
+          </button>
+        </form>
       {%- else -%}
-        <div class="product-card__placeholder">
-          {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder-svg' }}
-        </div>
-      {%- endif -%}
-
-      {%- if product.compare_at_price > product.price -%}
-        <span class="product-card__badge product-card__badge--sale">
-          {{ 'products.product.on_sale' | t }}
-        </span>
-      {%- endif -%}
-
-      {%- if product.available == false -%}
-        <span class="product-card__badge product-card__badge--sold-out">
-          {{ 'products.product.sold_out' | t }}
-        </span>
+        <a class="pcard__btn pcard__btn--choose" href="{{ product.url }}">View Product</a>
       {%- endif -%}
     </div>
+  </div>
 
-    <div class="product-card__info">
-      <h3 class="product-card__title">{{ product.title }}</h3>
-
-      <div class="product-card__price">
-        {%- if product.compare_at_price > product.price -%}
-          <span class="product-card__price-sale">{{ product.price | money }}</span>
-          <span class="product-card__price-compare">{{ product.compare_at_price | money }}</span>
-        {%- else -%}
-          <span class="product-card__price-regular">{{ product.price | money }}</span>
-        {%- endif -%}
-      </div>
-    </div>
-  </a>
+  <div class="pcard__info">
+    <h3 class="pcard__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+  </div>
+  <div class="pcard__price">
+    {%- render 'price', product: product -%}
+  </div>
 </div>

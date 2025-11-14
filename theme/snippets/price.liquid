@@ -1,0 +1,16 @@
+{%- comment -%}
+  Renders product price with sale price if applicable
+  Accepts:
+  - product: {Object} Product Liquid object
+{%- endcomment -%}
+
+{%- if product.compare_at_price > product.price -%}
+  <span class="price price--on-sale">
+    <span class="price__sale">{{ product.price | money }}</span>
+    <s class="price__compare">{{ product.compare_at_price | money }}</s>
+  </span>
+{%- else -%}
+  <span class="price">
+    {{ product.price | money }}
+  </span>
+{%- endif -%}

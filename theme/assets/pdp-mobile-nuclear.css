@@ -1,0 +1,44 @@
+/* ==== NUCLEAR MOBILE FIX - KILL ALL CROPS ==== */
+@media (max-width: 768px){
+  /* Target the specific gallery container */
+  .op-gallery--stacked .pg-main,
+  .op-gallery--stacked .op-gallery__main,
+  .op-gallery .pg-main,
+  .op-gallery .op-gallery__main,
+  .pdp .op-gallery--stacked .pg-main,
+  .pdp .op-gallery--stacked .op-gallery__main,
+  .oneeko-product .op-gallery--stacked .pg-main,
+  .oneeko-product .op-gallery--stacked .op-gallery__main {
+    aspect-ratio: auto !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    position: relative !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  /* Target the images inside */
+  .op-gallery--stacked .pg-main img,
+  .op-gallery--stacked .op-gallery__main img,
+  .op-gallery .pg-main img,
+  .op-gallery .op-gallery__main img,
+  .pdp .op-gallery--stacked .pg-main img,
+  .pdp .op-gallery--stacked .op-gallery__main img,
+  .oneeko-product .op-gallery--stacked .pg-main img,
+  .oneeko-product .op-gallery--stacked .op-gallery__main img,
+  .pg-main-image,
+  #main-product-image {
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: 85vh !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+  }
+}

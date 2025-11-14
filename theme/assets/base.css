@@ -543,3 +543,47 @@ label {
   color: var(--color-text-muted);
   text-decoration: line-through;
 }
+
+/* ============================================
+   PRODUCT PAGE IMAGE FIX - NATURAL ASPECT RATIO
+   Removes Dawn theme's restrictive height/ratio forcing
+   ============================================ */
+
+.product__media img {
+  height: auto !important;
+  width: 100% !important;
+  object-fit: contain !important;
+}
+
+.product__media-wrapper,
+.product__media {
+  height: auto !important;
+  max-height: none !important;
+}
+
+.product__modal-opener,
+.product__media {
+  aspect-ratio: unset !important;
+}
+
+/* Override any gallery containers */
+.media,
+.pg-main,
+.op-gallery__main,
+.product-media-wrapper,
+.product-media {
+  height: auto !important;
+  max-height: none !important;
+  aspect-ratio: unset !important;
+}
+
+/* Ensure images maintain natural ratio */
+.media img,
+.pg-main img,
+.pg-main-image,
+#main-product-image {
+  height: auto !important;
+  width: 100% !important;
+  object-fit: contain !important;
+  position: static !important;
+}

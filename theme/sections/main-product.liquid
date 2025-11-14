@@ -1,6 +1,6 @@
 {%- render 'product-schema', product: product -%}
 
-<section class="oneeko-product">
+<section class="oneeko-product pdp">
   <div class="op-container">
     <div class="op-grid">
       <!-- Product Images -->
@@ -273,26 +273,21 @@
       {%- endif -%}
     </div>
   </div>
+
+  <!-- Product JSON for sticky bar price updates -->
+  <script type="application/json" data-product-json>
+    {{ product | json }}
+  </script>
 </section>
 
-<!-- Mobile Sticky Add to Cart Bar -->
-<aside class="mobile-atc-bar" data-mobile-atc>
-  <div class="mobile-atc-bar__price">
-    {{ product.price | money }}
+<!-- Mobile Sticky CTA Bar -->
+<div class="sticky-cta" aria-live="polite">
+  <div class="sticky-cta__price" data-sticky-price>{{ product.price | money }}</div>
+  <div style="display:flex; gap:8px;">
+    <button class="sticky-cta__btn sticky-cta__btn--cart" data-sticky-atc {% unless product.available %}disabled{% endunless %}>Add to Cart</button>
+    <button class="sticky-cta__btn sticky-cta__btn--buy" data-sticky-buy {% unless product.available %}disabled{% endunless %}>Buy Now</button>
   </div>
-  <button
-    type="button"
-    class="mobile-atc-bar__btn"
-    data-mobile-atc-btn
-    {% unless product.available %}disabled{% endunless %}
-  >
-    {%- if product.available -%}
-      Add to Cart
-    {%- else -%}
-      Sold Out
-    {%- endif -%}
-  </button>
-</aside>
+</div>
 
 <style>
   /* Product Page Wrapper - Constrain Width */
