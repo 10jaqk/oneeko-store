@@ -428,11 +428,34 @@ h2 {
     box-sizing: border-box;
   }
 
+  /* CONSTRAIN IMAGE GALLERY WIDTH - REMOVE DESKTOP MAX-WIDTH */
+  .op-gallery,
+  .op-gallery--stacked {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+  }
+
+  .op-gallery__main,
+  .pg-main {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-sizing: border-box;
+  }
+
   /* Keep images natural on mobile */
   .op-gallery--stacked .pg-main img,
-  .op-gallery--stacked .op-gallery__main img {
+  .op-gallery--stacked .op-gallery__main img,
+  #main-product-image {
     width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
+    box-sizing: border-box;
   }
 
   /* Compact title and info */
