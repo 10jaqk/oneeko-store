@@ -40,20 +40,59 @@
   /* Collapse long content by default */
   .pdp .collapsible-content { border-radius: 10px; overflow: hidden; }
 
-  /* Sticky CTA bar */
+  /* Sticky CTA bar - Amazon-style stacked buttons */
   .sticky-cta {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
-    backdrop-filter: blur(6px); background: rgba(255,255,255,.92);
-    border-top: 1px solid #eee; padding: 10px 12px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 10px;
+    backdrop-filter: blur(6px); background: rgba(255,255,255,.95);
+    border-top: 1px solid #D5D9D9;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
-  .sticky-cta__price { align-self: center; font-weight: 800; font-size: 16px; text-align: left; }
-  .sticky-cta__btn { min-height: 48px; border-radius: 12px; font-weight: 800; }
-  .sticky-cta__btn--cart { background:#111; color:#fff; }
-  .sticky-cta__btn--buy  { background:#d46b08; color:#fff; }
+  .sticky-cta__price {
+    font-weight: 700;
+    font-size: 16px;
+    text-align: left;
+    color: #0F1111;
+  }
+  .sticky-cta__btn {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 8px;
+    font-weight: 400;
+    font-size: 13px;
+    border: 1px solid;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .sticky-cta__btn--cart {
+    background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+    border-color: #a88734 #9c7e31 #846a29;
+    color: #111;
+  }
+  .sticky-cta__btn--cart:hover {
+    background: linear-gradient(to bottom, #f5d78e, #edb932);
+  }
+  .sticky-cta__btn--buy  {
+    background: linear-gradient(to bottom, #f3a847, #f08804);
+    border-color: #e47911;
+    color: #111;
+  }
+  .sticky-cta__btn--buy:hover {
+    background: linear-gradient(to bottom, #f2a03e, #f18904);
+  }
 }
 
 /* Safe focus + accessibility */
 .sticky-cta__btn:focus { outline: 2px solid #d46b08; outline-offset: 2px; }
+
+/* Hide sticky CTA on desktop - mobile only */
+@media (min-width: 769px) {
+  .sticky-cta {
+    display: none !important;
+  }
+}
 
 /* ==== ENHANCED MOBILE HERO CONTAIN FIX ==== */
 @media (max-width: 768px){

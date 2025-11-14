@@ -283,10 +283,8 @@
 <!-- Mobile Sticky CTA Bar -->
 <div class="sticky-cta" aria-live="polite">
   <div class="sticky-cta__price" data-sticky-price>{{ product.price | money }}</div>
-  <div style="display:flex; gap:8px;">
-    <button class="sticky-cta__btn sticky-cta__btn--cart" data-sticky-atc {% unless product.available %}disabled{% endunless %}>Add to Cart</button>
-    <button class="sticky-cta__btn sticky-cta__btn--buy" data-sticky-buy {% unless product.available %}disabled{% endunless %}>Buy Now</button>
-  </div>
+  <button class="sticky-cta__btn sticky-cta__btn--cart" data-sticky-atc {% unless product.available %}disabled{% endunless %}>Add to Cart</button>
+  <button class="sticky-cta__btn sticky-cta__btn--buy" data-sticky-buy {% unless product.available %}disabled{% endunless %}>Buy Now</button>
 </div>
 
 <style>
@@ -418,7 +416,7 @@
     display: flex;
     align-items: center;
     gap: 3px;
-    max-width: 110px;
+    max-width: 90px;
   }
 
   .quantity-button {
@@ -441,10 +439,12 @@
 
   .quantity-input {
     flex: 1;
+    max-width: 40px;
+    min-width: 32px;
     text-align: center;
     font-weight: 400;
     font-size: 13px;
-    padding: 4px;
+    padding: 4px 2px;
     border: 1px solid #D5D9D9;
     border-radius: 8px;
     background-color: #F0F2F2;
