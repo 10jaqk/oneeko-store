@@ -403,6 +403,7 @@ h2 {
     max-width: 100vw;
     overflow-x: hidden;
     box-sizing: border-box;
+    background: red !important; /* TEST - Remove this after confirming */
   }
 
   .op-container {
@@ -502,3 +503,67 @@ h2 {
 }
 
 /* All mobile sizes use same consistent layout now */
+
+/* ============================================
+   NUCLEAR MOBILE FIX - OVERRIDE EVERYTHING
+   Added inline to bypass CDN cache
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* FORCE NO HORIZONTAL SCROLL AT ROOT LEVEL */
+  html, body {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  /* FORCE ALL CONTAINERS TO FIT */
+  *, *::before, *::after {
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+  }
+
+  /* TARGET PRODUCT PAGE SPECIFICALLY */
+  .oneeko-product,
+  .pdp,
+  .op-container,
+  .op-grid,
+  .op-media,
+  .op-buybox,
+  .op-gallery,
+  .op-gallery--stacked,
+  .op-gallery__main,
+  .pg-main {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* IMAGES */
+  .op-gallery--stacked .pg-main img,
+  .op-gallery--stacked .op-gallery__main img,
+  #main-product-image,
+  .pg-main-image {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* FORMS AND INPUTS */
+  .product-form,
+  .product-form__variants,
+  .product-form__quantity,
+  .product-form__buttons,
+  select,
+  input,
+  button {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}

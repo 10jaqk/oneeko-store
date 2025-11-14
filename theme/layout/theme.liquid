@@ -34,6 +34,7 @@
   {%- if template.name == 'product' -%}
     {{ 'oneeko-product.css' | asset_url | stylesheet_tag }}
     {{ 'pdp-mobile.css' | asset_url | stylesheet_tag }}
+    {{ 'mobile-fix-final.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
   {%- if template.name == 'collection' or template.name == 'search' or template.name == 'index' -%}
     {{ 'collection-cards.css' | asset_url | stylesheet_tag }}
