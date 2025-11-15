@@ -1,0 +1,59 @@
+*** Begin Patch
+*** Update File: theme/layout/theme.liquid
+@@
+   {%- if template.name == 'product' -%}
+     {{ 'oneeko-product.css' | asset_url | stylesheet_tag }}
++    {{ 'pdp-mobile.css'  | asset_url | stylesheet_tag }}
+   {%- endif -%}
+
+*** End Patch
+
+*** Update File: theme/assets/pdp-mobile.css
+@@
+ .sticky-cta__btn:focus { outline: 2px solid #d46b08; outline-offset: 2px; }
+@@
+   .pdp img[style*="object-fit: cover"],
+   .pdp img[style*="object-fit:cover"],
+   .pdp .object-cover,
+   .pdp .media--cropped img {
+     object-fit: contain !important;
+   }
+ }
++
++/* ===== Sticky CTA hide/show transitions ===== */
++@media (max-width: 768px){
++  .sticky-cta {
++    transform: translateY(100%);
++    transition: transform 0.3s ease;
++  }
++  .sticky-cta.active {
++    transform: translateY(0);
++  }
++}
+*** End Patch
+
+*** Update File: theme/assets/pdp-mobile.js
+@@
+ document.addEventListener('DOMContentLoaded', () => {
+@@
+   // Ensure thumbnail row is swipeable (no JS required, CSS handles overflow).
+-});
++  // Show/hide sticky CTA bar based on scroll
++  const stickyCtaBar = document.querySelector('.sticky-cta');
++  if (stickyCtaBar) {
++    const threshold = 300;
++    const toggleSticky = () => {
++      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
++      if (scrollTop > threshold) {
++        stickyCtaBar.classList.add('active');
++      } else {
++        stickyCtaBar.classList.remove('active');
++      }
++    };
++    // Initial state
++    toggleSticky();
++    window.addEventListener('scroll', toggleSticky);
++  }
++});
+
+*** End Patch

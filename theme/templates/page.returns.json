@@ -1,0 +1,76 @@
+{
+  "sections": {
+    "returns_section": {
+      "type": "returns",
+      "settings": {
+        "title": "Returns & Refund Policy",
+        "subtitle": "We want you to love your purchase. If not, we'll make it right.",
+        "show_contact_cta": true
+      },
+      "blocks": {
+        "policy_overview": {
+          "type": "policy_overview",
+          "settings": {
+            "section_title": "Our 30-Day Return Promise",
+            "content": "<p>We stand behind every product we sell. If you're not completely satisfied with your purchase, you can return it within <strong>30 days of delivery</strong> for a full refund—no questions asked.</p><p>Your satisfaction is our top priority, and we've made the return process as simple and hassle-free as possible.</p>"
+          }
+        },
+        "return_steps": {
+          "type": "return_steps",
+          "settings": {
+            "section_title": "How to Return an Item",
+            "step_1_title": "Contact Us",
+            "step_1_text": "Email us at support@oneeko.com or use our contact form. Include your order number and let us know which item you'd like to return and why. We're here to help!",
+            "step_2_title": "Get Return Authorization",
+            "step_2_text": "We'll send you a return authorization (RA) number and detailed shipping instructions within 24 hours. This helps us process your return quickly and efficiently.",
+            "step_3_title": "Ship the Item Back",
+            "step_3_text": "Pack the item securely in its original packaging (if possible), include the RA number, and ship it to the address provided. We recommend using a trackable shipping method and keeping your receipt.",
+            "step_4_title": "Receive Your Refund",
+            "step_4_text": "Once we receive and inspect your return (typically 2 business days), we'll process your refund within 3-5 business days. You'll receive an email confirmation when it's complete."
+          }
+        },
+        "conditions": {
+          "type": "conditions",
+          "settings": {
+            "section_title": "Return Conditions",
+            "content": "<p>To ensure a smooth return process, please make sure items meet these conditions:</p><ul><li><strong>Within 30 days:</strong> Items must be returned within 30 days of the delivery date</li><li><strong>Original condition:</strong> Items must be unused, unwashed, unworn, and in the same condition you received them</li><li><strong>Original packaging:</strong> Items should be in original packaging with all accessories and documentation when possible</li><li><strong>Tags attached:</strong> All original tags, labels, and security tags must be attached</li><li><strong>Proof of purchase:</strong> You must have your order confirmation or receipt</li></ul><p><strong>Non-returnable items:</strong> Customized or personalized products, final sale items, and opened hygiene products cannot be returned for health and safety reasons.</p>"
+          }
+        },
+        "refund_timeline": {
+          "type": "refund_timeline",
+          "settings": {
+            "section_title": "Refund Processing Timeline",
+            "content": "<p>Here's what to expect after shipping your return:</p><ul><li><strong>Transit time:</strong> 3-7 business days for your return to reach our warehouse (varies by location)</li><li><strong>Inspection:</strong> 1-2 business days for us to inspect and approve your return</li><li><strong>Refund processing:</strong> 3-5 business days for the refund to be processed to your original payment method</li><li><strong>Bank processing:</strong> 5-10 business days for the credit to appear in your account (varies by financial institution)</li></ul><p><strong>Shipping costs:</strong> Original shipping charges are non-refundable. Return shipping costs are the customer's responsibility unless the item is defective or we made a shipping error.</p><p><strong>Restocking fee:</strong> We do not charge restocking fees on standard returns.</p>"
+          }
+        },
+        "exchanges": {
+          "type": "exchanges",
+          "settings": {
+            "section_title": "Exchanges & Size Swaps",
+            "content": "<p>Need a different size, color, or model? We've got you covered!</p><p><strong>Free exchanges:</strong> We offer free exchanges for items of equal or lesser value within the 30-day return window. If the replacement item costs more, you'll only pay the difference.</p><p><strong>Faster delivery:</strong> Exchanges are processed faster than refunds! We'll ship your new item as soon as we receive your return, so you get what you need quickly.</p><p><strong>How to request:</strong> Simply indicate that you'd like an exchange (instead of a refund) when you contact us, and let us know which item you'd prefer.</p><p><strong>Defective items:</strong> If you receive a defective or damaged item, contact us immediately. We'll send a replacement at no cost and provide a prepaid return label for the defective item.</p>"
+          }
+        },
+        "contact": {
+          "type": "contact",
+          "settings": {
+            "section_title": "Need Help with a Return?",
+            "content": "<p>Our customer support team is ready to assist you!</p><p><strong>Email:</strong> support@oneeko.com<br><strong>Response time:</strong> Within 24 hours (usually much faster!)</p><p>We're committed to making your return experience smooth, fast, and hassle-free. Your satisfaction is our #1 priority.</p>",
+            "contact_link": "/pages/contact",
+            "contact_button_text": "Contact Support"
+          }
+        }
+      },
+      "block_order": [
+        "policy_overview",
+        "return_steps",
+        "conditions",
+        "refund_timeline",
+        "exchanges",
+        "contact"
+      ]
+    }
+  },
+  "order": [
+    "returns_section"
+  ]
+}

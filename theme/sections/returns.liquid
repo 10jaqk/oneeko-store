@@ -1,0 +1,476 @@
+{% comment %}
+  Returns & Refund Policy Section
+  Used in: page.returns template
+{% endcomment %}
+
+<section class="returns-policy py-8">
+  <div class="container">
+    <div class="returns-policy__header text-center mb-8">
+      <h1 class="returns-policy__title">{{ section.settings.title }}</h1>
+      {% if section.settings.subtitle != blank %}
+        <p class="returns-policy__subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    <div class="returns-policy__content">
+      {% for block in section.blocks %}
+        {% case block.type %}
+
+          {% when 'policy_overview' %}
+            <div class="policy-block policy-overview" {{ block.shopify_attributes }}>
+              <h2 class="policy-block__title">{{ block.settings.section_title }}</h2>
+              <div class="policy-block__content rte">
+                {{ block.settings.content }}
+              </div>
+            </div>
+
+          {% when 'return_steps' %}
+            <div class="policy-block return-steps" {{ block.shopify_attributes }}>
+              <h2 class="policy-block__title">{{ block.settings.section_title }}</h2>
+              <div class="return-steps__content">
+                {% if block.settings.step_1_title != blank %}
+                  <div class="return-step">
+                    <div class="return-step__number">1</div>
+                    <div class="return-step__content">
+                      <h3 class="return-step__title">{{ block.settings.step_1_title }}</h3>
+                      <p class="return-step__text">{{ block.settings.step_1_text }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+
+                {% if block.settings.step_2_title != blank %}
+                  <div class="return-step">
+                    <div class="return-step__number">2</div>
+                    <div class="return-step__content">
+                      <h3 class="return-step__title">{{ block.settings.step_2_title }}</h3>
+                      <p class="return-step__text">{{ block.settings.step_2_text }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+
+                {% if block.settings.step_3_title != blank %}
+                  <div class="return-step">
+                    <div class="return-step__number">3</div>
+                    <div class="return-step__content">
+                      <h3 class="return-step__title">{{ block.settings.step_3_title }}</h3>
+                      <p class="return-step__text">{{ block.settings.step_3_text }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+
+                {% if block.settings.step_4_title != blank %}
+                  <div class="return-step">
+                    <div class="return-step__number">4</div>
+                    <div class="return-step__content">
+                      <h3 class="return-step__title">{{ block.settings.step_4_title }}</h3>
+                      <p class="return-step__text">{{ block.settings.step_4_text }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+          {% when 'conditions' %}
+            <div class="policy-block conditions" {{ block.shopify_attributes }}>
+              <h2 class="policy-block__title">{{ block.settings.section_title }}</h2>
+              <div class="policy-block__content rte">
+                {{ block.settings.content }}
+              </div>
+            </div>
+
+          {% when 'refund_timeline' %}
+            <div class="policy-block refund-timeline" {{ block.shopify_attributes }}>
+              <h2 class="policy-block__title">{{ block.settings.section_title }}</h2>
+              <div class="policy-block__content rte">
+                {{ block.settings.content }}
+              </div>
+            </div>
+
+          {% when 'exchanges' %}
+            <div class="policy-block exchanges" {{ block.shopify_attributes }}>
+              <h2 class="policy-block__title">{{ block.settings.section_title }}</h2>
+              <div class="policy-block__content rte">
+                {{ block.settings.content }}
+              </div>
+            </div>
+
+          {% when 'contact' %}
+            <div class="policy-block contact" {{ block.shopify_attributes }}>
+              <h2 class="policy-block__title">{{ block.settings.section_title }}</h2>
+              <div class="policy-block__content rte">
+                {{ block.settings.content }}
+              </div>
+              {% if section.settings.show_contact_cta %}
+                <div class="policy-block__cta">
+                  <a href="{{ block.settings.contact_link }}" class="btn btn-primary">
+                    {{ block.settings.contact_button_text | default: "Contact Us" }}
+                  </a>
+                </div>
+              {% endif %}
+            </div>
+
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .returns-policy {
+    background-color: var(--color-bg-secondary);
+  }
+
+  .returns-policy__header {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-8);
+  }
+
+  .returns-policy__title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .returns-policy__subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+  }
+
+  .returns-policy__content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .policy-block {
+    background-color: var(--color-bg-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-8);
+    margin-bottom: var(--spacing-6);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .policy-block__title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-6);
+    padding-bottom: var(--spacing-4);
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .policy-block__content {
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-primary);
+  }
+
+  .policy-block__content ul {
+    margin: var(--spacing-4) 0;
+    padding-left: var(--spacing-6);
+  }
+
+  .policy-block__content li {
+    margin-bottom: var(--spacing-3);
+  }
+
+  .policy-block__content strong {
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .policy-block__cta {
+    margin-top: var(--spacing-6);
+    text-align: center;
+  }
+
+  /* Return Steps Styling */
+  .return-steps__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+  }
+
+  .return-step {
+    display: flex;
+    gap: var(--spacing-4);
+    padding: var(--spacing-5);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--color-brand-primary);
+  }
+
+  .return-step__number {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-brand-primary);
+    color: white;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    border-radius: var(--radius-full);
+  }
+
+  .return-step__content {
+    flex: 1;
+  }
+
+  .return-step__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-2);
+  }
+
+  .return-step__text {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+  }
+
+  /* Highlight important info */
+  .policy-overview {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 2px solid var(--color-brand-light);
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .returns-policy__title {
+      font-size: var(--font-size-3xl);
+    }
+
+    .policy-block {
+      padding: var(--spacing-5);
+    }
+
+    .policy-block__title {
+      font-size: var(--font-size-xl);
+    }
+
+    .return-step {
+      flex-direction: column;
+      gap: var(--spacing-3);
+    }
+
+    .return-step__number {
+      align-self: flex-start;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Returns & Refund Policy",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "Returns & Refund Policy"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "We want you to love your purchase. If not, we'll make it right."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact_cta",
+      "label": "Show Contact CTA",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "policy_overview",
+      "name": "Policy Overview",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Our Return Promise"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>We offer a <strong>30-day money-back guarantee</strong> on all products. If you're not completely satisfied with your purchase, simply return it within 30 days for a full refund—no questions asked.</p>"
+        }
+      ]
+    },
+    {
+      "type": "return_steps",
+      "name": "Return Steps",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "How to Return an Item"
+        },
+        {
+          "type": "text",
+          "id": "step_1_title",
+          "label": "Step 1 Title",
+          "default": "Contact Us"
+        },
+        {
+          "type": "textarea",
+          "id": "step_1_text",
+          "label": "Step 1 Description",
+          "default": "Email us at support@oneeko.com or use our contact form to initiate your return. Please include your order number and reason for return."
+        },
+        {
+          "type": "text",
+          "id": "step_2_title",
+          "label": "Step 2 Title",
+          "default": "Get Return Authorization"
+        },
+        {
+          "type": "textarea",
+          "id": "step_2_text",
+          "label": "Step 2 Description",
+          "default": "We'll send you a return authorization number and shipping instructions within 24 hours. This helps us process your return quickly."
+        },
+        {
+          "type": "text",
+          "id": "step_3_title",
+          "label": "Step 3 Title",
+          "default": "Ship the Item Back"
+        },
+        {
+          "type": "textarea",
+          "id": "step_3_text",
+          "label": "Step 3 Description",
+          "default": "Pack the item securely in its original packaging (if possible) and ship it to the address provided. Keep your tracking number for your records."
+        },
+        {
+          "type": "text",
+          "id": "step_4_title",
+          "label": "Step 4 Title",
+          "default": "Receive Your Refund"
+        },
+        {
+          "type": "textarea",
+          "id": "step_4_text",
+          "label": "Step 4 Description",
+          "default": "Once we receive and inspect your return, we'll process your refund within 3-5 business days. You'll receive a confirmation email when it's complete."
+        }
+      ]
+    },
+    {
+      "type": "conditions",
+      "name": "Return Conditions",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Return Conditions"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>To be eligible for a return, items must meet the following conditions:</p><ul><li><strong>Within 30 days:</strong> Items must be returned within 30 days of delivery</li><li><strong>Original condition:</strong> Items must be unused, unworn, and in original condition</li><li><strong>Original packaging:</strong> Items should be in original packaging when possible</li><li><strong>Tags attached:</strong> All tags and labels must be attached</li><li><strong>Not personalized:</strong> Customized or personalized items cannot be returned</li></ul>"
+        }
+      ]
+    },
+    {
+      "type": "refund_timeline",
+      "name": "Refund Timeline",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Refund Processing Time"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Once we receive your returned item:</p><ul><li><strong>Inspection:</strong> We'll inspect the item within 2 business days</li><li><strong>Refund processing:</strong> If approved, your refund will be processed within 3-5 business days</li><li><strong>Credit appears:</strong> Depending on your payment method, it may take an additional 5-10 business days for the credit to appear in your account</li></ul><p><strong>Shipping costs:</strong> Original shipping costs are non-refundable unless the item is defective or we made an error.</p>"
+        }
+      ]
+    },
+    {
+      "type": "exchanges",
+      "name": "Exchanges",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Exchanges & Size Swaps"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Need a different size or color? We're happy to help!</p><p><strong>Free exchanges:</strong> We offer free exchanges for items of equal or lesser value within 30 days. Simply indicate you'd like an exchange when you contact us.</p><p><strong>Faster process:</strong> Exchanges are typically processed faster than refunds, and we'll ship your new item as soon as we receive your return.</p>"
+        }
+      ]
+    },
+    {
+      "type": "contact",
+      "name": "Contact Information",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Questions About Returns?"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Our customer service team is here to help!</p><p><strong>Email:</strong> support@oneeko.com<br><strong>Response time:</strong> Within 24 hours</p><p>We're committed to making your return experience as smooth and hassle-free as possible.</p>"
+        },
+        {
+          "type": "url",
+          "id": "contact_link",
+          "label": "Contact Link"
+        },
+        {
+          "type": "text",
+          "id": "contact_button_text",
+          "label": "Button Text",
+          "default": "Contact Support"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Returns & Refund Policy",
+      "blocks": [
+        {
+          "type": "policy_overview"
+        },
+        {
+          "type": "return_steps"
+        },
+        {
+          "type": "conditions"
+        },
+        {
+          "type": "refund_timeline"
+        },
+        {
+          "type": "exchanges"
+        },
+        {
+          "type": "contact"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
