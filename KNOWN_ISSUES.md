@@ -1,6 +1,6 @@
 # Known Issues - OneEko Store
 
-**Last Updated:** November 14, 2025
+**Last Updated:** November 15, 2025
 **Status:** Testing Phase
 
 ---
@@ -38,6 +38,29 @@
 ---
 
 ## Fixed Issues
+
+### November 15, 2025
+
+- ✅ **Fixed:** Bug #1 - Product Details Accordion Content Overlaps Description
+  - **Severity:** High
+  - **Description:** Accordion content was overlapping product description instead of expanding inline
+  - **Fix:** Changed `.op-wide` from `position: fixed` modal to inline expansion with smooth height transitions
+  - **File:** `theme/assets/oneeko-product.css`
+  - **Lines:** 310-355
+
+- ✅ **Fixed:** Bug #2 - Duplicate Details/Shipping/FAQ Buttons
+  - **Severity:** Medium
+  - **Description:** Same buttons appeared twice on product page (desktop view)
+  - **Fix:** Added media query to hide buttons in original buybox position on desktop (≥993px), show only after JavaScript moves them to full-width section
+  - **File:** `theme/assets/oneeko-product.css`
+  - **Lines:** 365-379
+
+- ✅ **Fixed:** Test red background on product page
+  - **Severity:** Low
+  - **Description:** Debug red background was still visible on production
+  - **Fix:** Removed `background: red !important;` from mobile product container
+  - **File:** `theme/assets/oneeko-product.css`
+  - **Line:** 470
 
 ### November 14, 2025
 
