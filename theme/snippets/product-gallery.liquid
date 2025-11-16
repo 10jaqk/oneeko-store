@@ -1,7 +1,7 @@
 <div class="op-gallery op-gallery--stacked" data-product-gallery>
   {%- if product.images.size > 0 -%}
-    <!-- Main Image -->
-    <div class="op-gallery__main pg-main">
+    <!-- Main Image with Zoom -->
+    <div class="op-gallery__main pg-main" data-zoom-container>
       <img
         id="main-product-image"
         src="{{ product.featured_image | img_url: '1000x' }}"
@@ -13,8 +13,16 @@
         alt="{{ product.featured_image.alt | escape }}"
         class="pg-main-image"
         data-main-image
+        data-zoom-image="{{ product.featured_image | img_url: '2048x' }}"
         loading="eager"
       >
+      <!-- Zoom Lens (overlay that follows cursor) -->
+      <div class="zoom-lens" data-zoom-lens style="display: none;"></div>
+    </div>
+
+    <!-- Zoom Preview Box (shows on right side on desktop) -->
+    <div class="zoom-preview" data-zoom-preview style="display: none;">
+      <div class="zoom-preview__image" data-zoom-preview-image></div>
     </div>
 
     <!-- Thumbnails (Below Main Image) -->
@@ -46,22 +54,106 @@
 
 
 <script>
-  // Product Gallery
-  document.querySelectorAll('[data-thumbnail]').forEach(thumbnail => {
-    thumbnail.addEventListener('click', function() {
-      const mainImage = document.querySelector('[data-main-image]');
-      const newSrc = this.dataset.imageSrc;
-      const newSrcset = this.dataset.imageSrcset;
+  (function() {
+    // Product Gallery - Thumbnail switching
+    document.querySelectorAll('[data-thumbnail]').forEach(thumbnail => {
+      thumbnail.addEventListener('click', function() {
+        const mainImage = document.querySelector('[data-main-image]');
+        const newSrc = this.dataset.imageSrc;
+        const newSrcset = this.dataset.imageSrcset;
 
-      // Update main image
-      mainImage.src = newSrc;
-      if (newSrcset) {
-        mainImage.srcset = newSrcset;
-      }
+        // Update main image
+        mainImage.src = newSrc;
+        if (newSrcset) {
+          mainImage.srcset = newSrcset;
+        }
 
-      // Update active state
-      document.querySelectorAll('[data-thumbnail]').forEach(t => t.classList.remove('active'));
-      this.classList.add('active');
+        // Update zoom image (2048x for high quality zoom)
+        const zoomSrc = newSrc.replace('1000x', '2048x');
+        mainImage.setAttribute('data-zoom-image', zoomSrc);
+
+        // Update active state
+        document.querySelectorAll('[data-thumbnail]').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
     });
-  });
+
+    // Image Zoom Functionality (Desktop Only)
+    const zoomContainer = document.querySelector('[data-zoom-container]');
+    const mainImage = document.querySelector('[data-main-image]');
+    const zoomLens = document.querySelector('[data-zoom-lens]');
+    const zoomPreview = document.querySelector('[data-zoom-preview]');
+    const zoomPreviewImage = document.querySelector('[data-zoom-preview-image]');
+
+    if (!zoomContainer || !mainImage || !zoomLens || !zoomPreview || !zoomPreviewImage) {
+      return; // Exit if elements don't exist
+    }
+
+    // Only enable zoom on desktop (width >= 993px)
+    function isDesktop() {
+      return window.innerWidth >= 993;
+    }
+
+    // Initialize zoom on mouse enter
+    mainImage.addEventListener('mouseenter', function() {
+      if (!isDesktop()) return;
+
+      const zoomImageSrc = this.getAttribute('data-zoom-image');
+      if (!zoomImageSrc) return;
+
+      // Show zoom elements
+      zoomLens.style.display = 'block';
+      zoomPreview.style.display = 'block';
+
+      // Set background image for preview
+      zoomPreviewImage.style.backgroundImage = `url('${zoomImageSrc}')`;
+      zoomPreviewImage.style.backgroundSize = '200%'; // 2x zoom
+    });
+
+    // Update zoom position on mouse move
+    mainImage.addEventListener('mousemove', function(e) {
+      if (!isDesktop()) return;
+      if (zoomLens.style.display === 'none') return;
+
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Lens dimensions
+      const lensWidth = 150;
+      const lensHeight = 150;
+
+      // Calculate lens position (centered on cursor)
+      let lensX = x - lensWidth / 2;
+      let lensY = y - lensHeight / 2;
+
+      // Keep lens within image bounds
+      lensX = Math.max(0, Math.min(lensX, rect.width - lensWidth));
+      lensY = Math.max(0, Math.min(lensY, rect.height - lensHeight));
+
+      // Position the lens
+      zoomLens.style.left = lensX + 'px';
+      zoomLens.style.top = lensY + 'px';
+
+      // Calculate background position for preview (inverted for zoom effect)
+      const percentX = (lensX / (rect.width - lensWidth)) * 100;
+      const percentY = (lensY / (rect.height - lensHeight)) * 100;
+
+      zoomPreviewImage.style.backgroundPosition = `${percentX}% ${percentY}%`;
+    });
+
+    // Hide zoom on mouse leave
+    mainImage.addEventListener('mouseleave', function() {
+      zoomLens.style.display = 'none';
+      zoomPreview.style.display = 'none';
+    });
+
+    // Hide zoom on window resize if not desktop
+    window.addEventListener('resize', function() {
+      if (!isDesktop()) {
+        zoomLens.style.display = 'none';
+        zoomPreview.style.display = 'none';
+      }
+    });
+  })();
 </script>
